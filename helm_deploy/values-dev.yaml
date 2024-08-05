@@ -1,11 +1,11 @@
 ---
-# Per environment values which override defaults in hmpps-template-typescript/values.yaml
+# Per environment values which override defaults in hmpps-jobs-board-reporting-ui/values.yaml
 
 generic-service:
   replicaCount: 2
 
   ingress:
-    host: hmpps-template-typescript-dev.hmpps.service.justice.gov.uk
+    host: hmpps-jobs-board-reporting-ui-dev.hmpps.service.justice.gov.uk
 
   env:
     ENVIRONMENT: DEV
@@ -14,7 +14,6 @@ generic-service:
     INGRESS_URL: "https://jobs-board-reporting-dev.hmpps.service.justice.gov.uk"
     DPS_URL: "https://digital-dev.prison.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
-    MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     NOMIS_USER_ROLES_API_URL: "https://nomis-user-roles-api-dev.prison.service.justice.gov.uk"
     JOB_API_URL: "https://jobs-board-api-dev.hmpps.service.justice.gov.uk"
@@ -23,4 +22,4 @@ generic-service:
     AUDIT_ENABLED: "false"
 
 generic-prometheus-alerts:
-  alertSeverity: prison-education-alerts
+  alertSeverity: NON_PROD_ALERTS_SEVERITY_LABEL
