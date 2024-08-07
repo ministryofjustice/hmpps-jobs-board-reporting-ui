@@ -5,14 +5,22 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: hmpps-jobs-board-reporting-ui-preprod.hmpps.service.justice.gov.uk
+    host: jobs-board-reporting-preprod.hmpps.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://hmpps-jobs-board-reporting-ui-preprod.hmpps.service.justice.gov.uk"
+    ENVIRONMENT: preprod
+    S3_REGION: eu-west-2
+    INGRESS_URL: "https://jobs-board-reporting-preprod.hmpps.service.justice.gov.uk"
+    DPS_URL: "https://digital-preprod.prison.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
+    MANAGE_USERS_API_URL: "https://manage-users-api-preprod.hmpps.service.justice.gov.uk"
+    NOMIS_USER_ROLES_API_URL: "https://nomis-user-roles-api-preprod.prison.service.justice.gov.uk"
+    COMPONENT_API_URL: "https://frontend-components-preprod.hmpps.service.justice.gov.uk"
+    JOB_API_URL: "https://jobs-board-api-preprod.hmpps.service.justice.gov.uk"
+    SYSTEM_PHASE: PREPROD
 
 generic-prometheus-alerts:
-  alertSeverity: digital-prison-service-dev
+  alertSeverity: prison-education-alerts
