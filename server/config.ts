@@ -97,6 +97,14 @@ export default {
       },
       agent: new AgentConfig(Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 10000))),
     },
+    frontendComponents: {
+      url: get('COMPONENT_API_URL', 'http://localhost:8083', requiredInProduction),
+      timeout: {
+        response: Number(get('COMPONENT_API_URL', 10000)),
+        deadline: Number(get('COMPONENT_API_URL', 10000)),
+      },
+      agent: new AgentConfig(),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {

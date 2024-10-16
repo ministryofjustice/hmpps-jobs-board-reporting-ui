@@ -15,6 +15,7 @@ import setUpStaticResources from './middleware/setUpStaticResources'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
+import getFrontendComponents from './middleware/getFrontendComponents'
 
 import routes from './routes'
 import type { Services } from './services'
@@ -37,6 +38,10 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware())
   app.use(setUpCsrf())
   app.use(setUpCurrentUser())
+
+  // Get front end components for DPS header
+  app.get('*', getFrontendComponents(services))
+  app.post('*', getFrontendComponents(services))
 
   app.use(routes(services))
 
