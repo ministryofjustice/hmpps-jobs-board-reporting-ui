@@ -20,6 +20,7 @@ generic-service:
     NOMIS_USER_ROLES_API_URL: "https://nomis-user-roles-api-dev.prison.service.justice.gov.uk"
     JOB_API_URL: "https://jobs-board-api-dev.hmpps.service.justice.gov.uk"
     COMPONENT_API_URL: "https://frontend-components-dev.hmpps.service.justice.gov.uk"
+    WORK_AFTER_RELEASE_URL: "https://get-ready-for-work-dev.hmpps.service.justice.gov.uk"
     SYSTEM_PHASE: DEV
     AUDIT_ENABLED: "false"
 

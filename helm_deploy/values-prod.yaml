@@ -14,6 +14,7 @@ generic-service:
     AUDIT_ENABLED: "false"
     JOB_API_URL: "https://jobs-board-api.hmpps.service.justice.gov.uk"
     COMPONENT_API_URL: "https://frontend-components.hmpps.service.justice.gov.uk"
+    WORK_AFTER_RELEASE_URL: "https://get-ready-for-work.hmpps.service.justice.gov.uk"
     SYSTEM_PHASE: PROD
 
 generic-prometheus-alerts:

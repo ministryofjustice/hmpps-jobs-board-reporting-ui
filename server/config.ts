@@ -120,4 +120,7 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  dpsHomeUrl: get('DPS_URL', 'http://localhost:3001/', requiredInProduction),
+  workAfterReleaseUrl: get('WORK_AFTER_RELEASE_URL', 'http://localhost:3000/', requiredInProduction),
+  phaseName: get('SYSTEM_PHASE', '', requiredInProduction),
 }
