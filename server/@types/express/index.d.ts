@@ -5,6 +5,9 @@ export declare module 'express-session' {
   interface SessionData {
     returnTo: string
     nowInMinutes: number
+    data: {
+      [key: string]: unknown
+    }
   }
 }
 
