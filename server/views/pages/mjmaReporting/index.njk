@@ -1,5 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
 
 {% set title = 'Work after release reporting' %}
 
@@ -41,6 +42,17 @@
           </nav>
         </div>
       </div>
+
+      {% include './partials/_mjmaFilters.njk' %}
+
+      <p class="govuk-body">
+        Report period: 1 January 2024 to 1 February 2024
+      </p>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_mjmaSummary.njk' %}
+
     </div>
   </div>
  
