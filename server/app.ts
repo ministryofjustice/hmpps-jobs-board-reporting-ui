@@ -19,6 +19,7 @@ import getFrontendComponents from './middleware/getFrontendComponents'
 
 import routes from './routes'
 import type { Services } from './services'
+import expressContext from './middleware/expressContext'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -37,7 +38,8 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpAuthentication())
   app.use(authorisationMiddleware())
   app.use(setUpCsrf())
-  app.use(setUpCurrentUser())
+  app.use(setUpCurrentUser(services))
+  app.use(expressContext())
 
   // Get front end components for DPS header
   app.get('*', getFrontendComponents(services))

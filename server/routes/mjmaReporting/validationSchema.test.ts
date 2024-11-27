@@ -7,8 +7,8 @@ describe('validationSchema', () => {
 
   it('On validation success - should allow both dates to be empty', () => {
     req.body = {
-      fromDate: '',
-      toDate: '',
+      dateFrom: '',
+      dateTo: '',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -16,10 +16,10 @@ describe('validationSchema', () => {
     expect(error).toBeFalsy()
   })
 
-  it('On validation error - should disallow fromDate without toDate', () => {
+  it('On validation error - should disallow dateFrom without dateTo', () => {
     req.body = {
-      fromDate: '15/03/2024',
-      toDate: '',
+      dateFrom: '15/03/2024',
+      dateTo: '',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -28,10 +28,10 @@ describe('validationSchema', () => {
     expect(error.details[0].message).toBe('Enter or select a `latest` date')
   })
 
-  it('On validation error - should disallow toDate without fromDate', () => {
+  it('On validation error - should disallow dateTo without dateFrom', () => {
     req.body = {
-      fromDate: '',
-      toDate: '16/03/2024',
+      dateFrom: '',
+      dateTo: '16/03/2024',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -40,10 +40,10 @@ describe('validationSchema', () => {
     expect(error.details[0].message).toBe('Enter or select a `earliest` date')
   })
 
-  it('On validation success - should allow valid fromDate and toDate', () => {
+  it('On validation success - should allow valid dateFrom and dateTo', () => {
     req.body = {
-      fromDate: '15/03/2024',
-      toDate: '16/03/2024',
+      dateFrom: '15/03/2024',
+      dateTo: '16/03/2024',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -51,10 +51,10 @@ describe('validationSchema', () => {
     expect(error).toBeFalsy()
   })
 
-  it('On validation error - should disallow toDate being before fromDate', () => {
+  it('On validation error - should disallow dateTo being before dateFrom', () => {
     req.body = {
-      fromDate: '15/03/2024',
-      toDate: '14/03/2024',
+      dateFrom: '15/03/2024',
+      dateTo: '14/03/2024',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -63,10 +63,10 @@ describe('validationSchema', () => {
     expect(error.details[0].message).toBe("The `latest` date must be after the 'earliest' date")
   })
 
-  it('On validation error - should disallow an invalid fromDate', () => {
+  it('On validation error - should disallow an invalid dateFrom', () => {
     req.body = {
-      fromDate: 'invalid-date',
-      toDate: '16/03/2024',
+      dateFrom: 'invalid-date',
+      dateTo: '16/03/2024',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -75,10 +75,10 @@ describe('validationSchema', () => {
     expect(error.details[0].message).toBe('Enter the date in the correct format')
   })
 
-  it('On validation error - should disallow an invalid toDate', () => {
+  it('On validation error - should disallow an invalid dateTo', () => {
     req.body = {
-      fromDate: '15/03/2024',
-      toDate: 'invalid-date',
+      dateFrom: '15/03/2024',
+      dateTo: 'invalid-date',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })

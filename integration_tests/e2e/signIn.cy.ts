@@ -7,6 +7,8 @@ context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
+    cy.task('getUserActiveCaseLoad')
+    cy.task('getJobSummary')
   })
 
   it('Unauthenticated user directed to auth', () => {

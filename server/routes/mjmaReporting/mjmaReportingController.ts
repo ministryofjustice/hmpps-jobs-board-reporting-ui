@@ -8,18 +8,20 @@ import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 
 export default class MjmaReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
-    const { fromDate, toDate } = req.query
+    const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
+    const { summary } = req.context
 
     try {
       const data = {
-        fromDate,
-        toDate,
-        fromDateDisplay: fromDate
-          ? format(parse(fromDate.toString(), 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
+        dateFrom,
+        dateTo,
+        dateFromDisplay: dateFrom
+          ? format(parse(dateFrom, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthStartDate(new Date()), 'd MMMM yyyy'),
-        toDateDisplay: toDate
-          ? format(parse(toDate.toString(), 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
+        dateToDisplay: dateTo
+          ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
+        summary,
       }
 
       setSessionData(req, ['mjmaReporting', 'data'], data)
@@ -31,7 +33,7 @@ export default class MjmaReportingController {
   }
 
   public post: RequestHandler = async (req, res, next): Promise<void> => {
-    const { fromDate, toDate } = req.body
+    const { dateFrom, dateTo } = req.body
 
     try {
       // If validation errors render errors
@@ -42,13 +44,13 @@ export default class MjmaReportingController {
         res.render('pages/mjmaReporting/index', {
           ...data,
           errors,
-          fromDate,
-          toDate,
+          dateFrom,
+          dateTo,
         })
         return
       }
 
-      const uri = [toDate && `toDate=${toDate}`, fromDate && `fromDate=${fromDate}`].filter(val => !!val)
+      const uri = [dateTo && `dateTo=${dateTo}`, dateFrom && `dateFrom=${dateFrom}`].filter(val => !!val)
 
       res.redirect(uri.length ? `/?${uri.join('&')}` : '/')
     } catch (err) {

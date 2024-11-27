@@ -5,29 +5,29 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
         {{ mojDatePicker({
-          id: "fromDate",
-          name: "fromDate",
+          id: "dateFrom",
+          name: "dateFrom",
           label: {
               text: "Date from (earliest)"
           },
           hint: {
             text: "For example, 31/3/2024"
           },
-          value: fromDate
+          value: dateFrom
         }) }}
       </div>
 
       <div class="govuk-grid-column-one-quarter">
         {{ mojDatePicker({
-          id: "toDate",
-          name: "toDate",
+          id: "dateTo",
+          name: "dateTo",
           label: {
               text: "Date to (latest)"
           },
           hint: {
             text: "For example, 31/3/2024"
           },
-          value: toDate
+          value: dateTo
         }) }}
       </div>
     </div>

@@ -6,57 +6,57 @@ export default function validationSchema(): ObjectSchema {
   return joi
     .object({})
     .custom((obj, helper) => {
-      const { fromDate, toDate } = obj
+      const { dateFrom, dateTo } = obj
 
-      if (!fromDate && !toDate) {
+      if (!dateFrom && !dateTo) {
         return true
       }
 
-      if (fromDate && !toDate) {
-        return helper.error('any.toDateRequired', {
-          key: 'toDate',
-          label: 'toDate',
+      if (dateFrom && !dateTo) {
+        return helper.error('any.dateToRequired', {
+          key: 'dateTo',
+          label: 'dateTo',
         })
       }
 
-      if (!fromDate && toDate) {
-        return helper.error('any.fromDateRequired', {
-          key: 'fromDate',
-          label: 'fromDate',
+      if (!dateFrom && dateTo) {
+        return helper.error('any.dateFromRequired', {
+          key: 'dateFrom',
+          label: 'dateFrom',
         })
       }
 
       // Check if both dates are valid
-      const fromDateObj = parse(fromDate.toString(), 'dd/MM/yyyy', new Date())
-      const toDateObj = parse(toDate.toString(), 'dd/MM/yyyy', new Date())
+      const dateFromObj = parse(dateFrom.toString(), 'dd/MM/yyyy', new Date())
+      const dateToObj = parse(dateTo.toString(), 'dd/MM/yyyy', new Date())
 
-      if (Number.isNaN(fromDateObj.getTime())) {
+      if (Number.isNaN(dateFromObj.getTime())) {
         return helper.error('date.base', {
-          key: 'fromDate',
-          label: 'fromDate',
+          key: 'dateFrom',
+          label: 'dateFrom',
         })
       }
 
-      if (Number.isNaN(toDateObj.getTime())) {
+      if (Number.isNaN(dateToObj.getTime())) {
         return helper.error('date.base', {
-          key: 'toDate',
-          label: 'toDate',
+          key: 'dateTo',
+          label: 'dateTo',
         })
       }
 
-      // Check if toDate is after fromDate
-      if (toDateObj <= fromDateObj) {
+      // Check if dateTo is after dateFrom
+      if (dateToObj <= dateFromObj) {
         return helper.error('date.order', {
-          key: 'toDate',
-          label: 'toDate',
+          key: 'dateTo',
+          label: 'dateTo',
         })
       }
 
       return true
     })
     .messages({
-      'any.toDateRequired': 'Enter or select a `latest` date',
-      'any.fromDateRequired': 'Enter or select a `earliest` date',
+      'any.dateToRequired': 'Enter or select a `latest` date',
+      'any.dateFromRequired': 'Enter or select a `earliest` date',
       'date.base': 'Enter the date in the correct format',
       'date.order': "The `latest` date must be after the 'earliest' date",
     })
