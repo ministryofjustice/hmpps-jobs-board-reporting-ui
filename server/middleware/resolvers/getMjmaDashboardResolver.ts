@@ -7,7 +7,7 @@ import JobService from '../../services/jobService'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 
-const getMjmaSummaryResolver =
+const getMjmaDashboardResolver =
   (jobService: JobService): RequestHandler =>
   async (req, res, next): Promise<void> => {
     const { username } = res.locals.user
@@ -26,20 +26,28 @@ const getMjmaSummaryResolver =
         dateToParam = format(getLastFullMonthEndDate(new Date()), 'yyyy-MM-dd')
       }
 
-      // Get summary
-      const summary = await jobService.getSummary(username, {
-        prisonId: userActiveCaseLoad.caseLoadId,
-        dateFrom: dateFromParam,
-        dateTo: dateToParam,
-      })
+      // Get dashboard data
+      const [summary, applicationsByStage] = await Promise.all([
+        jobService.getSummary(username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromParam,
+          dateTo: dateToParam,
+        }),
+        jobService.getTotalApplicationsByStage(username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromParam,
+          dateTo: dateToParam,
+        }),
+      ])
 
       req.context.summary = summary
+      req.context.applicationsByStage = applicationsByStage
 
       next()
     } catch (err) {
-      logger.error('Error getting data - MJMA summary')
+      logger.error('Error getting data - MJMA dashboard data')
       next(err)
     }
   }
 
-export default getMjmaSummaryResolver
+export default getMjmaDashboardResolver

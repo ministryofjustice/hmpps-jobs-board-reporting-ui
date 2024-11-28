@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import Controller from './mjmaReportingController'
-import getMjmaSummaryResolver from '../../middleware/resolvers/getMjmaSummaryResolver'
+import getMjmaDashboardResolver from '../../middleware/resolvers/getMjmaDashboardResolver'
 import { Services } from '../../services'
 import routes from './index'
 
 jest.mock('./mjmaReportingController')
-jest.mock('../../middleware/resolvers/getMjmaSummaryResolver')
+jest.mock('../../middleware/resolvers/getMjmaDashboardResolver')
 
 describe('MJMA Reporting routes', () => {
   let router: Router
@@ -21,7 +21,7 @@ describe('MJMA Reporting routes', () => {
       get: jest.fn(),
       post: jest.fn(),
     }))
-    ;(getMjmaSummaryResolver as jest.Mock).mockImplementation(() => jest.fn())
+    ;(getMjmaDashboardResolver as jest.Mock).mockImplementation(() => jest.fn())
   })
 
   it('should register GET route', () => {
@@ -30,7 +30,7 @@ describe('MJMA Reporting routes', () => {
     expect(router.get).toHaveBeenCalledWith(
       '/',
       [
-        expect.any(Function), // getMjmaSummaryResolver
+        expect.any(Function), // getMjmaDashboardResolver
       ],
       expect.any(Function), // controller.get
     )

@@ -1,0 +1,144 @@
+/** Styles for horizontal-stacked-bar-type analytics chart */
+
+// table containing horizontal stacked bar chart
+.app-chart-table--bars {
+  th, td {
+    text-align: right;
+
+    // column containing chart bars
+    &:last-child {
+      min-width: 38%;
+    }
+  }
+}
+
+// tables packing rows more closely together; 1 line of text per row
+.app-chart-table--tight-bars {
+  tbody tr:not(:last-child) td {
+    padding-bottom: 0;
+  }
+}
+
+@mixin chart-table-columns($bars-width, $column-count, $first-column-width: null) {
+  th, td {
+    @if $first-column-width {
+      // normal column width when first column is wider
+      width: calc((100% - $bars-width - $first-column-width) / ($column-count - 1));
+
+      // column containing row label (e.g. location or protected characteristic)
+      &:first-child {
+        width: $first-column-width;
+      }
+    } @else {
+      // normal column width
+      width: calc((100% - $bars-width) / $column-count);
+    }
+
+    // column containing chart bars
+    &:last-child {
+      width: $bars-width;
+    }
+  }
+}
+
+.app-chart-table--bars-with-2-columns {
+  @include chart-table-columns(64%, 2);
+
+  &.app-chart-table--bars-wide-label, &.app-chart-table--bars-extra-wide-label {
+    @include chart-table-columns(50%, 2, 25%);
+  }
+}
+
+.app-chart-table--bars-with-3-columns {
+  @include chart-table-columns(61%, 3);
+
+  &.app-chart-table--bars-wide-label {
+    @include chart-table-columns(44%, 3, 22%);
+  }
+
+  &.app-chart-table--bars-extra-wide-label {
+    @include chart-table-columns(39%, 3, 41%);
+  }
+}
+
+.app-chart-table--bars-with-4-columns {
+  @include chart-table-columns(52%, 4);
+
+  &.app-chart-table--bars-wide-label {
+    @include chart-table-columns(40%, 4, 21%);
+  }
+
+  &.app-chart-table--bars-extra-wide-label {
+    @include chart-table-columns(42%, 4, 28%);
+  }
+}
+
+.app-chart-table--bars-with-5-columns {
+  @include chart-table-columns(50%, 5);
+
+  &.app-chart-table--bars-wide-label {
+    @include chart-table-columns(39%, 5, 21%);
+  }
+
+  &.app-chart-table--bars-extra-wide-label {
+    @include chart-table-columns(39%, 5, 21%);
+  }
+}
+
+// cell containing bars
+td.app-chart-table__percentage-cell {
+  position: relative;
+  padding-right: 0;
+  border-left: 1px solid $govuk-border-colour;
+  border-right: 1px solid $govuk-border-colour;
+}
+
+// bars forming the chart; stackable
+.app-chart-table__percentage-cell-bar {
+  position: relative;
+  float: left;
+  width: 0;
+
+  .app-chart-table--tight-bars & {
+    padding-bottom: $chart-cell-pading;
+  }
+}
+
+// vertical 50% gridline
+.app-chart-table__axis-midpoint {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  border-left: 1px solid $govuk-border-colour;
+}
+
+// container for horizontal axis values
+td.app-chart-table__axis-values {
+  position: relative;
+  border-left: 1px solid $govuk-border-colour;
+  border-right: 1px solid $govuk-border-colour;
+}
+
+// values in horizontal axis
+.app-chart-table__axis-value {
+  display: block;
+  position: absolute;
+  top: 0;
+  padding: 0 $chart-cell-pading;
+  @include govuk-font($size: 14);
+}
+
+.app-chart-table__axis-value--min {
+  left: 0;
+}
+
+.app-chart-table__axis-value--mid {
+  left: 50%;
+  margin-left: -2.5em;
+}
+
+.app-chart-table__axis-value--max {
+  right: 0;
+}

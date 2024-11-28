@@ -1,0 +1,49 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-m">
+      Total applications by application stage
+    </h3>
+    <p class="govuk-body govuk-!-margin-bottom-6">Shows total number of open applications recorded at each stage of the application process.</p>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">
+        Contents
+      </h2>
+      <ul class="govuk-tabs__list" role="tablist">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
+          <a class="govuk-tabs__tab" href="#event-chart" id="tab_event-chart" role="tab" aria-controls="event-chart" aria-selected="true" tabindex="0">
+            Total applications chart view
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item" role="presentation">
+          <a class="govuk-tabs__tab" href="#event-table" id="tab_event-table" role="tab" aria-controls="event-table" aria-selected="false" tabindex="-1">
+            Total applications table view
+          </a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel" id="event-chart" role="tabpanel" aria-labelledby="tab_event-chart">
+        
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="event-table" role="tabpanel" aria-labelledby="tab_event-table">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Application status</th>
+              <th scope="col" class="govuk-table__header">Total</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for entry in applicationsByStage%}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ contentLookup.applicationStatus[entry.applicationStatus] }}</td>
+              <td class="govuk-table__cell">{{ entry.numberOfApplications }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

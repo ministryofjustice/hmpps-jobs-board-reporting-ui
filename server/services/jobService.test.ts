@@ -29,13 +29,13 @@ describe('JobService', () => {
       const mockSummary = { jobCount: 10, totalHoursWorked: 50 }
 
       hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
-      JobApiClient.prototype.getSummary = jest.fn().mockResolvedValue(mockSummary)
+      JobApiClient.prototype.getJobSummary = jest.fn().mockResolvedValue(mockSummary)
 
       const result = await jobService.getSummary(username, params)
 
       expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
       expect(JobApiClient).toHaveBeenCalledWith(systemToken)
-      expect(JobApiClient.prototype.getSummary).toHaveBeenCalledWith(params)
+      expect(JobApiClient.prototype.getJobSummary).toHaveBeenCalledWith(params)
       expect(result).toEqual(mockSummary)
     })
 
@@ -50,13 +50,56 @@ describe('JobService', () => {
       }
 
       hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
-      JobApiClient.prototype.getSummary = jest.fn().mockRejectedValue(error)
+      JobApiClient.prototype.getJobSummary = jest.fn().mockRejectedValue(error)
 
       await expect(jobService.getSummary(username, params)).rejects.toThrowError(error)
 
       expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
       expect(JobApiClient).toHaveBeenCalledWith(systemToken)
-      expect(JobApiClient.prototype.getSummary).toHaveBeenCalledWith(params)
+      expect(JobApiClient.prototype.getJobSummary).toHaveBeenCalledWith(params)
+    })
+  })
+
+  describe('getTotalApplicationsByStage', () => {
+    it('fetches a system token and retrieves application totals successfully', async () => {
+      const username = 'mock_username'
+      const systemToken = 'mock_system_token'
+      const params = {
+        prisonId: 'MDI',
+        dateFrom: '2024-01-01',
+        dateTo: '2024-01-31',
+      }
+      const mockSummary = { jobCount: 10, totalHoursWorked: 50 }
+
+      hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
+      JobApiClient.prototype.getTotalApplicationsByStage = jest.fn().mockResolvedValue(mockSummary)
+
+      const result = await jobService.getTotalApplicationsByStage(username, params)
+
+      expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
+      expect(JobApiClient).toHaveBeenCalledWith(systemToken)
+      expect(JobApiClient.prototype.getTotalApplicationsByStage).toHaveBeenCalledWith(params)
+      expect(result).toEqual(mockSummary)
+    })
+
+    it('throws an error if API client fails to fetch the application totals', async () => {
+      const username = 'mock_username'
+      const systemToken = 'mock_system_token'
+      const error = new Error('Failed to fetch application totals')
+      const params = {
+        prisonId: 'MDI',
+        dateFrom: '2024-01-01',
+        dateTo: '2024-01-31',
+      }
+
+      hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
+      JobApiClient.prototype.getTotalApplicationsByStage = jest.fn().mockRejectedValue(error)
+
+      await expect(jobService.getTotalApplicationsByStage(username, params)).rejects.toThrowError(error)
+
+      expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
+      expect(JobApiClient).toHaveBeenCalledWith(systemToken)
+      expect(JobApiClient.prototype.getTotalApplicationsByStage).toHaveBeenCalledWith(params)
     })
   })
 })

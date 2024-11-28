@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import expressMocks from '../../testutils/expressMocks'
-import getMjmaSummaryResolver from './getMjmaSummaryResolver'
+import getMjmaDashboardResolver from './getMjmaDashboardResolver'
 
-describe('getMjmaSummaryResolver', () => {
+describe('getMjmaDashboardResolver', () => {
   const { req, res, next } = expressMocks()
 
   res.locals.user = { username: 'mock_username' }
@@ -15,13 +15,21 @@ describe('getMjmaSummaryResolver', () => {
     details: [{ jobId: 1, jobName: 'Cleaner', hoursWorked: 10 }],
   }
 
+  const mockApplicationsByStage = [
+    {
+      applicationStatus: 'APPLICATION_MADE',
+      numberOfApplications: 26,
+    },
+  ]
+
   const jobServiceMock = {
     getSummary: jest.fn(),
+    getTotalApplicationsByStage: jest.fn(),
   }
 
   const error = new Error('mock_error')
 
-  const resolver = getMjmaSummaryResolver(jobServiceMock as any)
+  const resolver = getMjmaDashboardResolver(jobServiceMock as any)
 
   it('On error - Calls next with error', async () => {
     jobServiceMock.getSummary.mockRejectedValue(error)
@@ -38,6 +46,7 @@ describe('getMjmaSummaryResolver', () => {
 
   it('On success - Attaches data to context and calls next', async () => {
     jobServiceMock.getSummary.mockResolvedValue(mockSummary)
+    jobServiceMock.getTotalApplicationsByStage.mockResolvedValue(mockApplicationsByStage)
 
     await resolver(req, res, next)
 
@@ -46,7 +55,15 @@ describe('getMjmaSummaryResolver', () => {
       dateFrom: '2024-03-01',
       dateTo: '2024-03-10',
     })
+
+    expect(jobServiceMock.getTotalApplicationsByStage).toHaveBeenCalledWith('mock_username', {
+      prisonId: 'MDI',
+      dateFrom: '2024-03-01',
+      dateTo: '2024-03-10',
+    })
+
     expect(req.context.summary).toEqual(mockSummary)
+    expect(req.context.applicationsByStage).toEqual(mockApplicationsByStage)
     expect(next).toHaveBeenCalledWith()
   })
 

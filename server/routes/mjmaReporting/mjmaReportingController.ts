@@ -9,7 +9,7 @@ import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 export default class MjmaReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
-    const { summary } = req.context
+    const { summary, applicationsByStage } = req.context
 
     try {
       const data = {
@@ -22,6 +22,7 @@ export default class MjmaReportingController {
           ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
         summary,
+        applicationsByStage,
       }
 
       setSessionData(req, ['mjmaReporting', 'data'], data)
