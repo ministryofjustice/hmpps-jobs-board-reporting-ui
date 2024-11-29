@@ -2,20 +2,21 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
 {% from "../../macros/error-summary/macro.njk" import errorSummary %}
+{% from "../../macros/charts/barChart.njk" import barChart %}
 
 {% set title = 'Work after release reporting' %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
       items: [
-          {
-              text: "Digital prison services" if isPrisonUser else "HMPPS Digital Services",
-              href: dpsUrl
-          },
-          {
-              text: "Work after release",
-              href: workAfterReleaseUrl
-          }
+        {
+            text: "Digital prison services" if isPrisonUser else "HMPPS Digital Services",
+            href: dpsUrl
+        },
+        {
+            text: "Work after release",
+            href: workAfterReleaseUrl
+        }
       ],
       classes: 'govuk-!-display-none-print'
   })
@@ -58,7 +59,11 @@
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-      {% include './partials/_mjmaTotalApplications.njk' %}
+      {% include './partials/_mjmaTotalApplicationsStages.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_mjmaLatestApplicationStages.njk' %}
 
     </div>
   </div>

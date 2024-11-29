@@ -1,0 +1,43 @@
+{% macro barChart(chartId, title, chartMax, report, labelProperty, valueProperty, labelColumnWidth) %}
+
+  <table class="app-chart-table app-chart-table--bars app-chart-table--tight-bars app-chart-table--bars-with-2-columns {% if labelColumnWidth %}app-chart-table--bars-{{ labelColumnWidth }}-label{% endif %} govuk-!-margin-bottom-4" id="table-{{ chartId }}">
+    <caption class="govuk-visually-hidden">
+      {{ title }}
+    </caption>
+
+    <tbody>
+      {% set total = report | getBarChartRangeMax(valueProperty) %}
+      {% for row in report %}
+        <tr>
+          <td class="app-chart-table__label-cell">
+              {{ row[labelProperty] }}
+          </td>
+          <td class="app-chart-table__percentage-cell">
+            <span class="app-chart-table__axis-midpoint"></span>
+
+            {% if row[valueProperty] > 0 %}
+              <div class="app-chart-table__percentage-cell-bar app-chart-colour--dark-blue" data-style-width="{{ row[valueProperty] | percentageOf(total) }}">{{ row[valueProperty] }}</div>
+            {% else %}
+              <div class="app-chart-table__percentage-cell-bar" >&nbsp;</div>
+            {% endif %}
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+    <tfoot aria-hidden="true">
+      <tr>
+        <td></td>
+        <td class="app-chart-table__axis-values">
+          <span class="app-chart-table__axis-midpoint">&nbsp;</span>
+          <span class="app-chart-table__axis-value app-chart-table__axis-value--min">0</stong></span>
+          <span class="app-chart-table__axis-value app-chart-table__axis-value--mid">{{ total / 2 }}</stong></span>
+          <span class="app-chart-table__axis-value app-chart-table__axis-value--max">{{ total }}</span>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+{% endmacro %}
+

@@ -29,4 +29,17 @@ export default class JobService {
 
     return new JobApiClient(systemToken).getTotalApplicationsByStage(params)
   }
+
+  async getLatestApplicationsByStage(
+    username: string,
+    params: {
+      prisonId: string
+      dateFrom: string
+      dateTo: string
+    },
+  ) {
+    const systemToken = await this.hmppsAuthClient.getSystemClientToken(username)
+
+    return new JobApiClient(systemToken).getLatestApplicationsByStage(params)
+  }
 }

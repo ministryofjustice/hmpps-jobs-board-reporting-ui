@@ -98,9 +98,12 @@ td.app-chart-table__percentage-cell {
   position: relative;
   float: left;
   width: 0;
+  color: #fff;
 
   .app-chart-table--tight-bars & {
-    padding-bottom: $chart-cell-pading;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 }
 
@@ -125,20 +128,26 @@ td.app-chart-table__axis-values {
 .app-chart-table__axis-value {
   display: block;
   position: absolute;
+  min-width: 50px;
+  text-align: center;
   top: 0;
-  padding: 0 $chart-cell-pading;
-  @include govuk-font($size: 14);
+  padding: 0;
+  font-weight: bold;
+  @include govuk-font($size: 16);
 }
 
 .app-chart-table__axis-value--min {
-  left: 0;
+  top: 1.5em;
+  left: -25px
 }
 
 .app-chart-table__axis-value--mid {
+  top: 1.5em;
   left: 50%;
-  margin-left: -2.5em;
+  margin-left: -25px
 }
 
 .app-chart-table__axis-value--max {
-  right: 0;
+  top: 1.5em;
+  right: -25px
 }

@@ -27,7 +27,7 @@ const getMjmaDashboardResolver =
       }
 
       // Get dashboard data
-      const [summary, applicationsByStage] = await Promise.all([
+      const [summary, totalApplicationsByStage, latestApplicationsByStage] = await Promise.all([
         jobService.getSummary(username, {
           prisonId: userActiveCaseLoad.caseLoadId,
           dateFrom: dateFromParam,
@@ -38,10 +38,16 @@ const getMjmaDashboardResolver =
           dateFrom: dateFromParam,
           dateTo: dateToParam,
         }),
+        jobService.getLatestApplicationsByStage(username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromParam,
+          dateTo: dateToParam,
+        }),
       ])
 
       req.context.summary = summary
-      req.context.applicationsByStage = applicationsByStage
+      req.context.totalApplicationsByStage = totalApplicationsByStage
+      req.context.latestApplicationsByStage = latestApplicationsByStage
 
       next()
     } catch (err) {

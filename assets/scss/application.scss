@@ -9,12 +9,8 @@ $govuk-page-width: $moj-page-width;
 
 @import './components/header-bar';
 @import './components/chart-colours';
-@import './components/chart-disclaimer';
-@import './components/chart-legend';
 @import './components/chart-table';
 @import './components/chart-table-bars';
-@import './components/chart-table-heatmap';
-@import './components/chart-table-trends';
 @import './local';
 
 .filter-box {

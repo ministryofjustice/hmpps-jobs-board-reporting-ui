@@ -22,9 +22,17 @@ describe('getMjmaDashboardResolver', () => {
     },
   ]
 
+  const mockLatestApplicationsByStage = [
+    {
+      applicationStatus: 'APPLICATION_MADE',
+      numberOfApplications: 50,
+    },
+  ]
+
   const jobServiceMock = {
     getSummary: jest.fn(),
     getTotalApplicationsByStage: jest.fn(),
+    getLatestApplicationsByStage: jest.fn(),
   }
 
   const error = new Error('mock_error')
@@ -47,6 +55,7 @@ describe('getMjmaDashboardResolver', () => {
   it('On success - Attaches data to context and calls next', async () => {
     jobServiceMock.getSummary.mockResolvedValue(mockSummary)
     jobServiceMock.getTotalApplicationsByStage.mockResolvedValue(mockApplicationsByStage)
+    jobServiceMock.getLatestApplicationsByStage.mockResolvedValue(mockLatestApplicationsByStage)
 
     await resolver(req, res, next)
 
@@ -62,8 +71,15 @@ describe('getMjmaDashboardResolver', () => {
       dateTo: '2024-03-10',
     })
 
+    expect(jobServiceMock.getLatestApplicationsByStage).toHaveBeenCalledWith('mock_username', {
+      prisonId: 'MDI',
+      dateFrom: '2024-03-01',
+      dateTo: '2024-03-10',
+    })
+
     expect(req.context.summary).toEqual(mockSummary)
-    expect(req.context.applicationsByStage).toEqual(mockApplicationsByStage)
+    expect(req.context.totalApplicationsByStage).toEqual(mockApplicationsByStage)
+    expect(req.context.latestApplicationsByStage).toEqual(mockLatestApplicationsByStage)
     expect(next).toHaveBeenCalledWith()
   })
 

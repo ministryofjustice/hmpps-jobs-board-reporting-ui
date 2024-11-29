@@ -5,11 +5,13 @@ import validationSchema from './validationSchema'
 import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
+import ApplicationsByStageResult from '../../data/jobApi/interfaces/applicationsByStageResult'
+import contentLookup from '../../constants/contentLookup'
 
 export default class MjmaReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
-    const { summary, applicationsByStage } = req.context
+    const { summary, totalApplicationsByStage, latestApplicationsByStage } = req.context
 
     try {
       const data = {
@@ -22,7 +24,14 @@ export default class MjmaReportingController {
           ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
         summary,
-        applicationsByStage,
+        totalApplicationsByStage: totalApplicationsByStage.map((entry: ApplicationsByStageResult) => ({
+          applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
+          numberOfApplications: entry.numberOfApplications,
+        })),
+        latestApplicationsByStage: latestApplicationsByStage.map((entry: ApplicationsByStageResult) => ({
+          applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
+          numberOfApplications: entry.numberOfApplications,
+        })),
       }
 
       setSessionData(req, ['mjmaReporting', 'data'], data)

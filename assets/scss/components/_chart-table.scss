@@ -17,6 +17,21 @@ $chart-cell-pading: govuk-spacing(2);
   @include govuk-font($size: 16);
   @include govuk-text-colour;
 
+  tr:first-child td.app-chart-table__label-cell {
+    padding-top: govuk-spacing(5);
+  }
+
+  td.app-chart-table__label-cell {
+    text-wrap: nowrap;
+    padding-top: govuk-spacing(3);
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  tr:first-child td {
+    padding-top: govuk-spacing(4)
+  }
+
   th, td {
     padding: $chart-cell-pading $chart-cell-pading $chart-cell-pading 0;
     vertical-align: top;

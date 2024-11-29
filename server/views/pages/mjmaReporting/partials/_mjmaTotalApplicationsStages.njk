@@ -21,8 +21,8 @@
           </a>
         </li>
       </ul>
-      <div class="govuk-tabs__panel" id="event-chart" role="tabpanel" aria-labelledby="tab_event-chart">
-        
+      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="event-chart" role="tabpanel" aria-labelledby="tab_event-chart">
+        {{ barChart('applicationtotalsChart',' Total applications table view', 50, totalApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
       </div>
 
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="event-table" role="tabpanel" aria-labelledby="tab_event-table">
@@ -34,9 +34,9 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            {% for entry in applicationsByStage%}
+            {% for entry in totalApplicationsByStage%}
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">{{ contentLookup.applicationStatus[entry.applicationStatus] }}</td>
+              <td class="govuk-table__cell">{{ entry.applicationStatus }}</td>
               <td class="govuk-table__cell">{{ entry.numberOfApplications }}</td>
             </tr>
             {% endfor %}

@@ -102,4 +102,47 @@ describe('JobService', () => {
       expect(JobApiClient.prototype.getTotalApplicationsByStage).toHaveBeenCalledWith(params)
     })
   })
+
+  describe('getLatestApplicationsByStage', () => {
+    it('fetches a system token and retrieves application totals successfully', async () => {
+      const username = 'mock_username'
+      const systemToken = 'mock_system_token'
+      const params = {
+        prisonId: 'MDI',
+        dateFrom: '2024-01-01',
+        dateTo: '2024-01-31',
+      }
+      const mockSummary = { jobCount: 10, totalHoursWorked: 50 }
+
+      hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
+      JobApiClient.prototype.getLatestApplicationsByStage = jest.fn().mockResolvedValue(mockSummary)
+
+      const result = await jobService.getLatestApplicationsByStage(username, params)
+
+      expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
+      expect(JobApiClient).toHaveBeenCalledWith(systemToken)
+      expect(JobApiClient.prototype.getLatestApplicationsByStage).toHaveBeenCalledWith(params)
+      expect(result).toEqual(mockSummary)
+    })
+
+    it('throws an error if API client fails to fetch the application totals', async () => {
+      const username = 'mock_username'
+      const systemToken = 'mock_system_token'
+      const error = new Error('Failed to fetch application totals')
+      const params = {
+        prisonId: 'MDI',
+        dateFrom: '2024-01-01',
+        dateTo: '2024-01-31',
+      }
+
+      hmppsAuthClient.getSystemClientToken.mockResolvedValue(systemToken)
+      JobApiClient.prototype.getLatestApplicationsByStage = jest.fn().mockRejectedValue(error)
+
+      await expect(jobService.getLatestApplicationsByStage(username, params)).rejects.toThrowError(error)
+
+      expect(hmppsAuthClient.getSystemClientToken).toHaveBeenCalledWith(username)
+      expect(JobApiClient).toHaveBeenCalledWith(systemToken)
+      expect(JobApiClient.prototype.getLatestApplicationsByStage).toHaveBeenCalledWith(params)
+    })
+  })
 })
