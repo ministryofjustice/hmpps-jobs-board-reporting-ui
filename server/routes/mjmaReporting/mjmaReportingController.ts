@@ -7,6 +7,8 @@ import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 import ApplicationsByStageResult from '../../data/jobApi/interfaces/applicationsByStageResult'
 import contentLookup from '../../constants/contentLookup'
+import sortByArray from '../../utils/sortByArray'
+import applicationOrder from '../../constants/applicationOrder'
 
 export default class MjmaReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
@@ -14,6 +16,18 @@ export default class MjmaReportingController {
     const { summary, totalApplicationsByStage, latestApplicationsByStage } = req.context
 
     try {
+      const totalApplicationsByStageSorted = sortByArray({
+        source: totalApplicationsByStage,
+        by: applicationOrder,
+        sourceTransformer: (item: { applicationStatus: string }) => item.applicationStatus,
+      })
+
+      const latestApplicationsByStageeSorted = sortByArray({
+        source: latestApplicationsByStage,
+        by: applicationOrder,
+        sourceTransformer: (item: { applicationStatus: string }) => item.applicationStatus,
+      })
+
       const data = {
         dateFrom,
         dateTo,
@@ -24,11 +38,11 @@ export default class MjmaReportingController {
           ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
         summary,
-        totalApplicationsByStage: totalApplicationsByStage.map((entry: ApplicationsByStageResult) => ({
+        totalApplicationsByStage: totalApplicationsByStageSorted.map((entry: ApplicationsByStageResult) => ({
           applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
           numberOfApplications: entry.numberOfApplications,
         })),
-        latestApplicationsByStage: latestApplicationsByStage.map((entry: ApplicationsByStageResult) => ({
+        latestApplicationsByStage: latestApplicationsByStageeSorted.map((entry: ApplicationsByStageResult) => ({
           applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
           numberOfApplications: entry.numberOfApplications,
         })),
