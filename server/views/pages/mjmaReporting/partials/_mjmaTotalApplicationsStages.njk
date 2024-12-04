@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h3 class="govuk-heading-m">
+    <h3 class="govuk-heading-m" data-qa="totalApplicationsHeader">
       Total applications by application stage
     </h3>
     <p class="govuk-body govuk-!-margin-bottom-6">Shows total number of open applications recorded at each stage of the application process.</p>
@@ -11,21 +11,21 @@
       </h2>
       <ul class="govuk-tabs__list" role="tablist">
         <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-          <a class="govuk-tabs__tab" href="#event-chart" id="tab_event-chart" role="tab" aria-controls="event-chart" aria-selected="true" tabindex="0">
+          <a class="govuk-tabs__tab" href="#total-applications-chart" id="tab_total-applications-chart" role="tab" aria-controls="total-applications-chart" aria-selected="true" tabindex="0" data-qa="totalApplicationsChartTab">
             Total applications chart view
           </a>
         </li>
         <li class="govuk-tabs__list-item" role="presentation">
-          <a class="govuk-tabs__tab" href="#event-table" id="tab_event-table" role="tab" aria-controls="event-table" aria-selected="false" tabindex="-1">
+          <a class="govuk-tabs__tab" href="#total-applications-table" id="tab_total-applications-table" role="tab" aria-controls="total-applications-table" aria-selected="false" tabindex="-1" data-qa="totalApplicationsTableTab">
             Total applications table view
           </a>
         </li>
       </ul>
-      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="event-chart" role="tabpanel" aria-labelledby="tab_event-chart">
-        {{ barChart('applicationtotalsChart',' Total applications table view', 50, totalApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
+      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="total-applications-chart" role="tabpanel" aria-labelledby="tab_total-applications-chart">
+        {{ barChart('totalApplicationsChart',' Total applications table view', totalApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
       </div>
 
-      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="event-table" role="tabpanel" aria-labelledby="tab_event-table">
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="total-applications-table" role="tabpanel" aria-labelledby="tab_total-applications-table" data-qa="totalApplicationsTable" >
         <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

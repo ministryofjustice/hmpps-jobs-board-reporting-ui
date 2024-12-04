@@ -16,6 +16,85 @@ const getJobSummary = () =>
     },
   })
 
+const getTotalApplicationsByStage = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPathPattern: `/dashboard/applications-stage`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: [
+        {
+          applicationStatus: 'INTERVIEW_BOOKED',
+          numberOfApplications: 6,
+        },
+        {
+          applicationStatus: 'APPLICATION_MADE',
+          numberOfApplications: 26,
+        },
+        {
+          applicationStatus: 'APPLICATION_UNSUCCESSFUL',
+          numberOfApplications: 16,
+        },
+        {
+          applicationStatus: 'SELECTED_FOR_INTERVIEW',
+          numberOfApplications: 10,
+        },
+
+        {
+          applicationStatus: 'UNSUCCESSFUL_AT_INTERVIEW',
+          numberOfApplications: 0,
+        },
+        {
+          applicationStatus: 'JOB_OFFER',
+          numberOfApplications: 4,
+        },
+      ],
+    },
+  })
+
+const getLatestApplicationsByStage = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPathPattern: `/dashboard/applications-status`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: [
+        {
+          applicationStatus: 'APPLICATION_MADE',
+          numberOfApplications: 29,
+        },
+        {
+          applicationStatus: 'APPLICATION_UNSUCCESSFUL',
+          numberOfApplications: 10,
+        },
+        {
+          applicationStatus: 'SELECTED_FOR_INTERVIEW',
+          numberOfApplications: 0,
+        },
+        {
+          applicationStatus: 'INTERVIEW_BOOKED',
+          numberOfApplications: 6,
+        },
+        {
+          applicationStatus: 'UNSUCCESSFUL_AT_INTERVIEW',
+          numberOfApplications: 0,
+        },
+        {
+          applicationStatus: 'JOB_OFFER',
+          numberOfApplications: 14,
+        },
+      ],
+    },
+  })
+
 export default {
   getJobSummary,
+  getTotalApplicationsByStage,
+  getLatestApplicationsByStage,
 }

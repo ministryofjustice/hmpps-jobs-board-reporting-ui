@@ -23,7 +23,7 @@ export default class JobApiClient {
     const { prisonId, dateFrom, dateTo } = params
 
     const results = await this.restClient.get<JobSummaryResults>({
-      path: `/dashboard/application-stage?prisonId=${prisonId}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
+      path: `/dashboard/applications-stage?prisonId=${prisonId}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
     })
 
     return results

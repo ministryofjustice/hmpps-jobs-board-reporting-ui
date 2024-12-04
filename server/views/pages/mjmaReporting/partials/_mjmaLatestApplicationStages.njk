@@ -1,9 +1,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h3 class="govuk-heading-m">
+    <h3 class="govuk-heading-m" data-qa="latestApplicationsHeader">
       Latest recorded application status
     </h3>
-    <p class="govuk-body govuk-!-margin-bottom-6">Shows latest recorded status for each open application in the reporting period.</p>
+    <p class="govuk-body govuk-!-margin-bottom-6" data-qa="latestApplicationsContent">Shows latest recorded status for each open application in the reporting period.</p>
 
     <div class="govuk-tabs" data-module="govuk-tabs">
       <h2 class="govuk-tabs__title">
@@ -11,21 +11,21 @@
       </h2>
       <ul class="govuk-tabs__list" role="tablist">
         <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-          <a class="govuk-tabs__tab" href="#event-chart-2" id="tab_event-chart-2" role="tab" aria-controls="event-chart-2" aria-selected="true" tabindex="0">
+          <a class="govuk-tabs__tab" href="#latest-applications-chart" id="tab_latest-applications-chart" role="tab" aria-controls="latest-applications-chart" aria-selected="true" tabindex="0" data-qa="latestApplicationsChartTab">
             Latest application status chart view
           </a>
         </li>
         <li class="govuk-tabs__list-item" role="presentation">
-          <a class="govuk-tabs__tab" href="#event-table-2" id="tab_event-table-2" role="tab" aria-controls="event-table-2" aria-selected="false" tabindex="-1">
+          <a class="govuk-tabs__tab" href="#latest-applications-table" id="tab_latest-applications-table" role="tab" aria-controls="latest-applications-table" aria-selected="false" tabindex="-1" data-qa="latestApplicationsTableTab">
             Latest application status table view
           </a>
         </li>
       </ul>
-      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="event-chart-2" role="tabpanel" aria-labelledby="tab_event-chart">
-        {{ barChart('applicationtotalsChart','Latest application status chart view', 50, latestApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
+      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="latest-applications-chart" role="tabpanel" aria-labelledby="tab_latest-applications-chart">
+        {{ barChart('latestApplicationsChart','Latest application status chart view', latestApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
       </div>
 
-      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="event-table-2" role="tabpanel" aria-labelledby="tab_event-table">
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="latest-applications-table" role="tabpanel" aria-labelledby="tab_latest-applications-table" data-qa="latestApplicationsTable">
         <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

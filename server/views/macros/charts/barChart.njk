@@ -1,4 +1,4 @@
-{% macro barChart(chartId, title, chartMax, report, labelProperty, valueProperty, labelColumnWidth) %}
+{% macro barChart(chartId, title, report, labelProperty, valueProperty, labelColumnWidth) %}
 
   <table class="app-chart-table app-chart-table--bars app-chart-table--tight-bars app-chart-table--bars-with-2-columns {% if labelColumnWidth %}app-chart-table--bars-{{ labelColumnWidth }}-label{% endif %} govuk-!-margin-bottom-4" id="table-{{ chartId }}">
     <caption class="govuk-visually-hidden">
