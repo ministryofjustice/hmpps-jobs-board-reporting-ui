@@ -36,7 +36,7 @@ export default class ReportsPage extends Page {
 
   totalApplicationsHeader = (): PageElement => cy.get('[data-qa=totalApplicationsHeader]')
 
-  totalApplicationsContent = (): PageElement => cy.get('[data-qa=totalApplicationsHeader]')
+  totalApplicationsContent = (): PageElement => cy.get('[data-qa=totalApplicationsContent]')
 
   totalApplicationsChartTab = (): PageElement => cy.get('[data-qa=totalApplicationsChartTab]')
 
@@ -50,7 +50,7 @@ export default class ReportsPage extends Page {
 
   latestApplicationsHeader = (): PageElement => cy.get('[data-qa=latestApplicationsHeader]')
 
-  latestApplicationsContent = (): PageElement => cy.get('[data-qa=latestApplicationsHeader]')
+  latestApplicationsContent = (): PageElement => cy.get('[data-qa=latestApplicationsContent]')
 
   latestApplicationsChartTab = (): PageElement => cy.get('[data-qa=latestApplicationsChartTab]')
 
@@ -74,11 +74,25 @@ export default class ReportsPage extends Page {
           }
         }),
       )
+
+  chartData = (selector: ReportingTableSelector) =>
+    cy
+      .get(selector)
+      .find('tr')
+      .spread((...rest) =>
+        rest.map(element => {
+          const tds = Cypress.$(element).find('td')
+          return {
+            label: Cypress.$(tds[0]).text(),
+            value: Cypress.$(tds[1]).text(),
+          }
+        }),
+      )
 }
 
 export enum ReportingTableSelector {
-  LATEST_APPLICATIONS_CHART = '#latestApplicationsChart',
+  LATEST_APPLICATIONS_CHART = '#table-latestApplicationsChart',
   LATEST_APPLICATIONS_TABLE = '[data-qa=latestApplicationsTable]',
-  TOTAL_APPLICATIONS_CHART = '#totalApplicationsChart',
+  TOTAL_APPLICATIONS_CHART = '#table-totalApplicationsChart',
   TOTAL_APPLICATIONS_TABLE = '[data-qa=totalApplicationsTable]',
 }

@@ -18,7 +18,7 @@
             {% if row[valueProperty] > 0 %}
               <div class="app-chart-table__percentage-cell-bar app-chart-colour--dark-blue" data-style-width="{{ row[valueProperty] | percentageOf(total) }}">{{ row[valueProperty] }}</div>
             {% else %}
-              <div class="app-chart-table__percentage-cell-bar" >&nbsp;</div>
+              <div class="app-chart-table__percentage-cell-bar" ><span class="govuk-visually-hidden">{{ row[valueProperty] }}</span>&nbsp;</div>
             {% endif %}
 
           </td>
