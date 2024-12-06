@@ -6,11 +6,14 @@ import fs from 'fs'
 import { initialiseName } from './utils'
 import config from '../config'
 import logger from '../../logger'
+import formatAsPercentage from './formatAsPercentage'
+import getBarChartRangeMax from './getBarChartRangeMax'
 
 export default function nunjucksSetup(app: express.Express): void {
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
+  app.locals.dpsHomeUrl = config.dpsHomeUrl
   app.locals.applicationName = 'Hmpps Jobs Board Reporting Ui'
   app.locals.environmentName = config.environmentName
   app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
@@ -39,4 +42,6 @@ export default function nunjucksSetup(app: express.Express): void {
 
   njkEnv.addFilter('initialiseName', initialiseName)
   njkEnv.addFilter('assetMap', (url: string) => assetManifest[url] || url)
+  njkEnv.addFilter('percentageOf', formatAsPercentage)
+  njkEnv.addFilter('getBarChartRangeMax', getBarChartRangeMax)
 }

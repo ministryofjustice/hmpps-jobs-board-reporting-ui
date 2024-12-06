@@ -1,0 +1,49 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-m" data-qa="totalApplicationsHeader">
+      Total applications by application stage
+    </h3>
+    <p class="govuk-body govuk-!-margin-bottom-6" data-qa="totalApplicationsContent">Shows total number of open applications recorded at each stage of the application process.</p>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">
+        Contents
+      </h2>
+      <ul class="govuk-tabs__list" role="tablist">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
+          <a class="govuk-tabs__tab" href="#total-applications-chart" id="tab_total-applications-chart" role="tab" aria-controls="total-applications-chart" aria-selected="true" tabindex="0" data-qa="totalApplicationsChartTab">
+            Total applications chart view
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item" role="presentation">
+          <a class="govuk-tabs__tab" href="#total-applications-table" id="tab_total-applications-table" role="tab" aria-controls="total-applications-table" aria-selected="false" tabindex="-1" data-qa="totalApplicationsTableTab">
+            Total applications table view
+          </a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel govuk-!-padding-right-8 govuk-!-padding-bottom-8" id="total-applications-chart" role="tabpanel" aria-labelledby="tab_total-applications-chart">
+        {{ barChart('totalApplicationsChart',' Total applications table view', totalApplicationsByStage , 'applicationStatus', 'numberOfApplications') }}
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="total-applications-table" role="tabpanel" aria-labelledby="tab_total-applications-table" data-qa="totalApplicationsTable" >
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Application status</th>
+              <th scope="col" class="govuk-table__header">Total</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for entry in totalApplicationsByStage%}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ entry.applicationStatus }}</td>
+              <td class="govuk-table__cell">{{ entry.numberOfApplications }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

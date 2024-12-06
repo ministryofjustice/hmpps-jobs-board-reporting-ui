@@ -1,0 +1,26 @@
+<h3 class="govuk-heading-m govuk-!-margin-bottom-7">
+  Summary
+</h3>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-3">
+  <div class="govuk-grid-column-one-third">
+    <div class="reporting-stats">
+      <h4 class="govuk-heading-s">
+        Total number of applicants
+      </h4>
+      <p class="reporting-big-number" data-qa="numberOfApplicants">
+        {{ summary.numberOfApplicants }}
+      </p>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="reporting-stats">
+      <h4 class="govuk-heading-s">
+        Number of vacancies with at least one application
+      </h4>
+      <p class="reporting-big-number" data-qa="numberOfJobs">
+        {{ summary.numberOfJobs }}
+      </p>
+    </div>
+  </div>
+</div>

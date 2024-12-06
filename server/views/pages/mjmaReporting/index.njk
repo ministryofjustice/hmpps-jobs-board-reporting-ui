@@ -1,0 +1,71 @@
+{% extends "../../partials/layout.njk" %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
+{% from "../../macros/error-summary/macro.njk" import errorSummary %}
+{% from "../../macros/charts/barChart.njk" import barChart %}
+
+{% set title = 'Work after release reporting' %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+      items: [
+        {
+            text: "Digital prison services" if isPrisonUser else "HMPPS Digital Services",
+            href: dpsUrl
+        },
+        {
+            text: "Work after release",
+            href: workAfterReleaseUrl
+        }
+      ],
+      classes: 'govuk-!-display-none-print'
+  })
+  }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row govuk-!-display-none-print">
+    <div class="govuk-grid-column-full">
+      {{ errorSummary(errors) }}
+
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-7" xmlns="http://www.w3.org/1999/html">{{ title }}</h1>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+
+          <nav class="moj-sub-navigation govuk-!-margin-bottom-2" aria-label="Sub navigation">
+              <ul class="moj-sub-navigation__list">
+                  <li class="moj-sub-navigation__item">
+                    <a class="moj-sub-navigation__link" aria-current="page" href="#" >Match jobs and manage applications</a>
+                  </li>
+                  <li class="moj-sub-navigation__item">
+                    <a class="moj-sub-navigation__link" href="/gsrw">Preparing for work progress</a>
+                  </li>
+              </ul>
+          </nav>
+        </div>
+      </div>
+
+      {% include './partials/_mjmaFilters.njk' %}
+
+      <p class="govuk-body" data-qa="date-display">
+        Report period: {{ dateFromDisplay }} to {{ dateToDisplay }}
+      </p>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_mjmaSummary.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_mjmaTotalApplicationsStages.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_mjmaLatestApplicationStages.njk' %}
+
+    </div>
+  </div>
+ 
+{% endblock %}

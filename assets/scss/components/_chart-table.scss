@@ -1,0 +1,55 @@
+/** Base styles for analytics charts */
+
+$chart-cell-pading: govuk-spacing(2);
+
+// chart container that allows horizontal scrolling when the contents are too wide for the screen
+.app-chart-container {
+  margin-top: govuk-spacing(4);
+  overflow-x: scroll;
+}
+
+// base chart-containing table styles
+.app-chart-table {
+  margin: govuk-spacing(4) 0 govuk-spacing(6);
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  @include govuk-font($size: 16);
+  @include govuk-text-colour;
+
+  tr:first-child td.app-chart-table__label-cell {
+    padding-top: govuk-spacing(5);
+  }
+
+  td.app-chart-table__label-cell {
+    text-wrap: nowrap;
+    padding-top: govuk-spacing(3);
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  tr:first-child td {
+    padding-top: govuk-spacing(4)
+  }
+
+  th, td {
+    padding: $chart-cell-pading $chart-cell-pading $chart-cell-pading 0;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  @media print {
+    a {
+      text-decoration: none;
+      color: $govuk-print-text-colour;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

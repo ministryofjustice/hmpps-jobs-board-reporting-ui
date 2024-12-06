@@ -7,6 +7,10 @@ context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
+    cy.task('getUserActiveCaseLoad')
+    cy.task('getJobSummary')
+    cy.task('getTotalApplicationsByStage')
+    cy.task('getLatestApplicationsByStage')
   })
 
   it('Unauthenticated user directed to auth', () => {
@@ -23,12 +27,6 @@ context('Sign In', () => {
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.headerUserName().should('contain.text', 'J. Smith')
-  })
-
-  it('Phase banner visible in header', () => {
-    cy.signIn()
-    const indexPage = Page.verifyOnPage(IndexPage)
-    indexPage.headerPhaseBanner().should('contain.text', 'dev')
   })
 
   it('User can sign out', () => {

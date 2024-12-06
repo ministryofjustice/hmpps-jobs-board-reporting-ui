@@ -97,6 +97,22 @@ export default {
       },
       agent: new AgentConfig(Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 10000))),
     },
+    jobApi: {
+      url: get('JOB_API_URL', 'http://localhost:8083', requiredInProduction),
+      timeout: {
+        response: Number(get('JOB_API_URL', 10000)),
+        deadline: Number(get('JOB_API_URL', 10000)),
+      },
+      agent: new AgentConfig(),
+    },
+    frontendComponents: {
+      url: get('COMPONENT_API_URL', 'http://localhost:8083', requiredInProduction),
+      timeout: {
+        response: Number(get('COMPONENT_API_URL', 10000)),
+        deadline: Number(get('COMPONENT_API_URL', 10000)),
+      },
+      agent: new AgentConfig(),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {
@@ -112,4 +128,7 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  dpsHomeUrl: get('DPS_URL', 'http://localhost:3001/', requiredInProduction),
+  workAfterReleaseUrl: get('WORK_AFTER_RELEASE_URL', 'http://localhost:3000/', requiredInProduction),
+  phaseName: get('SYSTEM_PHASE', '', requiredInProduction),
 }
