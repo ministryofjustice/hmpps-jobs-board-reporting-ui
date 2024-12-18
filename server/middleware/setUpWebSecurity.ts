@@ -17,21 +17,36 @@ export default function setUpWebSecurity(): Router {
     helmet({
       contentSecurityPolicy: {
         directives: {
-          defaultSrc: ["'self'"],
+          defaultSrc: ["'self'", config.apis.frontendComponents.url],
           // This nonce allows us to use scripts with the use of the `cspNonce` local, e.g (in a Nunjucks template):
           // <script nonce="{{ cspNonce }}">
           // or
           // <link href="http://example.com/" rel="stylesheet" nonce="{{ cspNonce }}">
           // This ensures only scripts we trust are loaded, and not anything injected into the
           // page by an attacker.
-          scriptSrc: ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`],
-          styleSrc: ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`],
-          fontSrc: ["'self'"],
+          scriptSrc: [
+            "'self'",
+            config.apis.frontendComponents.url,
+            (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`,
+          ],
+          styleSrc: [
+            "'self'",
+            config.apis.frontendComponents.url,
+            (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`,
+          ],
+          fontSrc: ["'self'", config.apis.frontendComponents.url],
           formAction: [`'self' ${config.apis.hmppsAuth.externalUrl}`],
+          objectSrc: ["'none'"], // Disallow <object> or <embed> tags
         },
       },
       crossOriginEmbedderPolicy: true,
     }),
   )
+
+  // cf. https://security-guidance.service.justice.gov.uk/implement-security-txt/
+  router.get('/.well-known/security.txt', (req, res) =>
+    res.redirect(301, 'https://security-guidance.service.justice.gov.uk/.well-known/security.txt'),
+  )
+
   return router
 }
