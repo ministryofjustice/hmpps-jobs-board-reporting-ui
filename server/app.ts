@@ -21,6 +21,8 @@ import setUpLocals from './middleware/setUpLocals'
 import routes from './routes'
 import type { Services } from './services'
 import expressContext from './middleware/expressContext'
+import sanitizeBody from './middleware/sanitizeBody'
+import sanitizeQuery from './middleware/sanitizeQuery'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -42,6 +44,10 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCurrentUser(services))
   app.use(setUpLocals())
   app.use(expressContext())
+
+  // Sanitize user input
+  app.use(sanitizeBody)
+  app.use(sanitizeQuery)
 
   // Get front end components for DPS header
   app.get('*', getFrontendComponents(services))
