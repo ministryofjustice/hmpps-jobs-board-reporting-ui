@@ -21,7 +21,12 @@ export default function setUpWebSession(): Router {
     session({
       store,
       name: 'hmpps-jobs-board-reporting-ui.session',
-      cookie: { secure: config.https, sameSite: 'lax', maxAge: config.session.expiryMinutes * 60 * 1000 },
+      cookie: {
+        httpOnly: true,
+        secure: config.https,
+        sameSite: 'lax',
+        maxAge: config.session.expiryMinutes * 60 * 1000,
+      },
       secret: config.session.secret,
       resave: false, // redis implements touch so shouldn't need this
       saveUninitialized: false,
