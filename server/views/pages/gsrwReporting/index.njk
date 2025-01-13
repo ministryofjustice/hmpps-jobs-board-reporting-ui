@@ -1,5 +1,8 @@
 {% extends "../../partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
+{% from "../../macros/error-summary/macro.njk" import errorSummary %}
+{% from "../../macros/charts/barChart.njk" import barChart %}
 
 {% set title = 'Work after release reporting' %}
 
@@ -41,6 +44,13 @@
           </nav>
         </div>
       </div>
+
+      {% include './partials/_gsrwFilters.njk' %}
+
+      <p class="govuk-body" data-qa="date-display">
+        Report period: {{ dateFromDisplay }} to {{ dateToDisplay }}
+      </p>
+
     </div>
   </div>
  

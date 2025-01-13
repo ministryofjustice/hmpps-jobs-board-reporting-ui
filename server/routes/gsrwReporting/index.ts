@@ -5,4 +5,6 @@ import type { Services } from '../../services'
 export default (router: Router, _: Services) => {
   const controller = new GsrwReportingController()
   router.get('/gsrw', controller.get)
+
+  router.post('/gsrw', controller.post)
 }
