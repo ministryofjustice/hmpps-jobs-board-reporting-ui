@@ -9,6 +9,7 @@ import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 export default class GsrwReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
+    const { numberOfPrisoners } = req.context
 
     try {
       const data = {
@@ -20,6 +21,7 @@ export default class GsrwReportingController {
         dateToDisplay: dateTo
           ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
+        numberOfPrisoners,
       }
 
       setSessionData(req, ['gsrwReporting', 'data'], data)
