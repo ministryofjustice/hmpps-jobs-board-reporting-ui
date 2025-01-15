@@ -6,9 +6,10 @@ import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 import PrisonerSearchService from '../../services/prisonerSearchService'
+import WorkProfileService from '../../services/workProfileService'
 
 const getMjmaDashboardResolver =
-  (prisonerSearchService: PrisonerSearchService): RequestHandler =>
+  (prisonerSearchService: PrisonerSearchService, workProfileService: WorkProfileService): RequestHandler =>
   async (req, res, next): Promise<void> => {
     const { username } = res.locals.user
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
@@ -21,19 +22,27 @@ const getMjmaDashboardResolver =
       const dateToDt =
         dateFrom && dateTo ? parse(dateTo, 'dd/MM/yyyy', new Date()) : getLastFullMonthEndDate(new Date())
 
-      // Calculate latest release date
-      const latestReleaseDate = addWeeks(dateToDt, 12)
+      // Calculate and format date params
+      const latestReleaseDate = format(addWeeks(dateToDt, 12), 'yyyy-MM-dd')
+      const dateFromFormatted = format(dateFromDt, 'yyyy-MM-dd')
+      const dateToFormatted = format(dateToDt, 'yyyy-MM-dd')
 
       // Get dashboard data
-      const [numberOfPrisoners] = await Promise.all([
+      const [numberOfPrisoners, summary] = await Promise.all([
         prisonerSearchService.getPrisonersByReleaseDateCount(username, {
           prisonIds: [userActiveCaseLoad.caseLoadId],
-          earliestReleaseDate: format(dateFromDt, 'yyyy-MM-dd'),
-          latestReleaseDate: format(latestReleaseDate, 'yyyy-MM-dd'),
+          earliestReleaseDate: dateFromFormatted,
+          latestReleaseDate,
+        }),
+        workProfileService.getSummary(username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromFormatted,
+          dateTo: dateToFormatted,
         }),
       ])
 
       req.context.numberOfPrisoners = numberOfPrisoners || 0
+      req.context.summary = summary
 
       next()
     } catch (err) {

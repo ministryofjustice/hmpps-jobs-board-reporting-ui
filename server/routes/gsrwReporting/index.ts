@@ -5,7 +5,11 @@ import getGsrwDashboardResolver from '../../middleware/resolvers/getGsrwDashboar
 
 export default (router: Router, services: Services) => {
   const controller = new GsrwReportingController()
-  router.get('/gsrw', [getGsrwDashboardResolver(services.prisonerSearchService)], controller.get)
+  router.get(
+    '/gsrw',
+    [getGsrwDashboardResolver(services.prisonerSearchService, services.workProfileService)],
+    controller.get,
+  )
 
   router.post('/gsrw', controller.post)
 }
