@@ -5,11 +5,34 @@ import validationSchema from './validationSchema'
 import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
+import sortByArray from '../../utils/sortByArray'
+import workStatusProgressOrder from '../../constants/workStatusProgressOrder'
+import supportNeededDocumentsOrder from '../../constants/supportNeededDocumentsOrder'
+import supportToWorkDeclinedReasonsOrder from '../../constants/supportToWorkDeclinedReasonOrder'
 
 export default class GsrwReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
-    const { numberOfPrisoners, summary } = req.context
+    const { numberOfPrisoners, summary, workStatusProgress, supportNeededDocuments, supportToWorkDeclinedReasons } =
+      req.context
+
+    const workStatusProgressSorted = sortByArray({
+      source: workStatusProgress?.statusCounts,
+      by: workStatusProgressOrder,
+      sourceTransformer: (item: { profileStatus: string }) => item.profileStatus,
+    })
+
+    const supportNeededDocumentsSorted = sortByArray({
+      source: supportNeededDocuments,
+      by: supportNeededDocumentsOrder,
+      sourceTransformer: (item: { actionTodo: string }) => item.actionTodo,
+    })
+
+    const supportToWorkDeclinedReasonsSorted = sortByArray({
+      source: supportToWorkDeclinedReasons,
+      by: supportToWorkDeclinedReasonsOrder,
+      sourceTransformer: (item: { supportToWorkDeclinedReason: string }) => item.supportToWorkDeclinedReason,
+    })
 
     try {
       const data = {
@@ -23,6 +46,10 @@ export default class GsrwReportingController {
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
         numberOfPrisoners,
         summary,
+        numberOfPrisonersStatusChange: workStatusProgress?.numberOfPrisonersStatusChange,
+        workStatusProgress: workStatusProgressSorted,
+        supportNeededDocuments: supportNeededDocumentsSorted,
+        supportToWorkDeclinedReasons: supportToWorkDeclinedReasonsSorted,
       }
 
       setSessionData(req, ['gsrwReporting', 'data'], data)

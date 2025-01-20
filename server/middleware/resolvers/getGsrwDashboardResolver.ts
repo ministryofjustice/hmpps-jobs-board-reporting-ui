@@ -28,25 +28,44 @@ const getMjmaDashboardResolver =
       const dateToFormatted = format(dateToDt, 'yyyy-MM-dd')
 
       // Get dashboard data
-      const [numberOfPrisoners, summary] = await Promise.all([
-        prisonerSearchService.getPrisonersByReleaseDateCount(username, {
-          prisonIds: [userActiveCaseLoad.caseLoadId],
-          earliestReleaseDate: dateFromFormatted,
-          latestReleaseDate,
-        }),
-        workProfileService.getSummary(username, {
-          prisonId: userActiveCaseLoad.caseLoadId,
-          dateFrom: dateFromFormatted,
-          dateTo: dateToFormatted,
-        }),
-      ])
+      const [numberOfPrisoners, summary, workStatusProgress, supportNeededDocuments, supportToWorkDeclinedReasons] =
+        await Promise.all([
+          prisonerSearchService.getPrisonersByReleaseDateCount(username, {
+            prisonIds: [userActiveCaseLoad.caseLoadId],
+            earliestReleaseDate: dateFromFormatted,
+            latestReleaseDate,
+          }),
+          workProfileService.getSummary(username, {
+            prisonId: userActiveCaseLoad.caseLoadId,
+            dateFrom: dateFromFormatted,
+            dateTo: dateToFormatted,
+          }),
+          workProfileService.getWorkStatusProgress(username, {
+            prisonId: userActiveCaseLoad.caseLoadId,
+            dateFrom: dateFromFormatted,
+            dateTo: dateToFormatted,
+          }),
+          workProfileService.getSupportNeededDocuments(username, {
+            prisonId: userActiveCaseLoad.caseLoadId,
+            dateFrom: dateFromFormatted,
+            dateTo: dateToFormatted,
+          }),
+          workProfileService.getSupportToWorkDeclinedReasons(username, {
+            prisonId: userActiveCaseLoad.caseLoadId,
+            dateFrom: dateFromFormatted,
+            dateTo: dateToFormatted,
+          }),
+        ])
 
       req.context.numberOfPrisoners = numberOfPrisoners || 0
       req.context.summary = summary
+      req.context.workStatusProgress = workStatusProgress
+      req.context.supportNeededDocuments = supportNeededDocuments
+      req.context.supportToWorkDeclinedReasons = supportToWorkDeclinedReasons
 
       next()
     } catch (err) {
-      logger.error('Error getting data - MJMA dashboard data')
+      logger.error('Error getting data - GSRW dashboard data')
       next(err)
     }
   }
