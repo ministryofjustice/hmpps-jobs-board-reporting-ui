@@ -34,6 +34,11 @@ export default class GsrwReportingController {
       sourceTransformer: (item: { supportToWorkDeclinedReason: string }) => item.supportToWorkDeclinedReason,
     })
 
+    const statusCount = workStatusProgress?.statusCounts?.reduce(
+      (sum: number, status: { numberOfPrisoners: number }) => sum + status.numberOfPrisoners,
+      0,
+    )
+
     try {
       const data = {
         dateFrom,
@@ -47,6 +52,7 @@ export default class GsrwReportingController {
         numberOfPrisoners,
         summary,
         numberOfPrisonersStatusChange: workStatusProgress?.numberOfPrisonersStatusChange,
+        notStartedCount: numberOfPrisoners - statusCount < 0 ? 0 : numberOfPrisoners - statusCount,
         workStatusProgress: workStatusProgressSorted,
         supportNeededDocuments: supportNeededDocumentsSorted,
         supportToWorkDeclinedReasons: supportToWorkDeclinedReasonsSorted,

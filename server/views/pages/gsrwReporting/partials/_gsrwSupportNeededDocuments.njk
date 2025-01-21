@@ -15,63 +15,16 @@
           Total
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Bank account
-        </dt>
-        <dd class="govuk-summary-list__value">
-          2
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          CV
-        </dt>
-        <dd class="govuk-summary-list__value">
-          22
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Disclosure letter
-        </dt>
-        <dd class="govuk-summary-list__value">
-          12
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Email address
-        </dt>
-        <dd class="govuk-summary-list__value">
-          8
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Housing
-        </dt>
-        <dd class="govuk-summary-list__value">
-          21
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          ID
-        </dt>
-        <dd class="govuk-summary-list__value">
-          18
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Phone number
-        </dt>
-        <dd class="govuk-summary-list__value">
-          8
-        </dd>
-      </div>
+      {% for entry in supportNeededDocuments %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ contentLookup.supportNeededDocuments[entry.actionTodo] }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ entry.numberOfPrisoners }}
+          </dd>
+        </div>
+      {% endfor %}
     </dl>
-
   </div>
 </div>
