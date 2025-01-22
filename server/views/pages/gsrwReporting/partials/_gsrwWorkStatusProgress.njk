@@ -10,13 +10,12 @@
             <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
               Total number of prisoners who have changed status
             </h2>
-            <p class="reporting-big-number">21</p>
-            <!-- <p class="govuk-body govuk-!-margin-bottom-2">This is approximately <span class="govuk-!-font-weight-bold">82%</span> of your caseload for this period.</p> -->
+            <p class="reporting-big-number">{{ numberOfPrisonersStatusChange }}</p>
           </div>
       </div>
     </div>
 
-    <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list" data-qa="workStatusProgress">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Status
@@ -29,7 +28,7 @@
         <dt class="govuk-summary-list__key">
           Not started
         </dt>
-        <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisoners">
           {{ notStartedCount }}
         </dd>
       </div>
@@ -38,7 +37,7 @@
           <dt class="govuk-summary-list__key">
             {{ contentLookup.workStatusProgress[entry.profileStatus] }}
           </dt>
-          <dd class="govuk-summary-list__value">
+          <dd class="govuk-summary-list__value" data-qa="workStatusProgress_{{ entry.profileStatus }}_numberOfPrisoners">
             {{ entry.numberOfPrisoners }}
           </dd>
         </div>

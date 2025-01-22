@@ -106,7 +106,7 @@ export default {
       agent: new AgentConfig(),
     },
     workProfileApi: {
-      url: get('JOB_API_URL', 'http://localhost:8083', requiredInProduction),
+      url: get('ESWE_PROFILE_API_URL', 'http://localhost:8083', requiredInProduction),
       timeout: {
         response: Number(get('ESWE_PROFILE_API_URL', 10000)),
         deadline: Number(get('ESWE_PROFILE_API_URL', 10000)),

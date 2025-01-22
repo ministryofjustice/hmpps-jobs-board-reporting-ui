@@ -6,6 +6,9 @@ import logger from '../../../logger'
 import JobService from '../../services/jobService'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
+import getMjmaSummary from './utils/getMjmaSummary'
+import getTotalApplicationsByStage from './utils/getTotalApplicationsByStage'
+import getLatestApplicationsByStage from './utils/getLatestApplicationsByStage'
 
 const getMjmaDashboardResolver =
   (jobService: JobService): RequestHandler =>
@@ -28,17 +31,17 @@ const getMjmaDashboardResolver =
 
       // Get dashboard data
       const [summary, totalApplicationsByStage, latestApplicationsByStage] = await Promise.all([
-        jobService.getSummary(username, {
+        getMjmaSummary(jobService, username, {
           prisonId: userActiveCaseLoad.caseLoadId,
           dateFrom: dateFromParam,
           dateTo: dateToParam,
         }),
-        jobService.getTotalApplicationsByStage(username, {
+        getTotalApplicationsByStage(jobService, username, {
           prisonId: userActiveCaseLoad.caseLoadId,
           dateFrom: dateFromParam,
           dateTo: dateToParam,
         }),
-        jobService.getLatestApplicationsByStage(username, {
+        getLatestApplicationsByStage(jobService, username, {
           prisonId: userActiveCaseLoad.caseLoadId,
           dateFrom: dateFromParam,
           dateTo: dateToParam,

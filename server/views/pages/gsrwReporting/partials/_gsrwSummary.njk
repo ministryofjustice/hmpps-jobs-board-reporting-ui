@@ -8,7 +8,7 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners 12 weeks from release
       </h4>
-      <p class="reporting-big-number" data-qa="numberOfPrisoners">
+      <p class="reporting-big-number" data-qa="numberOfPrisoners12Weeks">
         {{ numberOfPrisoners }}
       </p>
     </div>
@@ -21,7 +21,7 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners worked with
       </h4>
-      <p class="reporting-big-number">
+      <p class="reporting-big-number" data-qa="numberOfPrisoners">
         {{ summary.numberOfPrisoners }}
       </p>
     </div>
@@ -31,8 +31,8 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners who do not want support
       </h4>
-      <p class="reporting-big-number">
-        {{ summary.numberOfSupportDeclinded }}
+      <p class="reporting-big-number" data-qa="numberOfSupportDeclined">
+        {{ summary.numberOfSupportDeclined }}
       </p>
     </div>
   </div>
@@ -41,7 +41,7 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners with no right to work
       </h4>
-      <p class="reporting-big-number">
+      <p class="reporting-big-number" data-qa="numberOfNoRightToWork">
         {{ summary.numberOfNoRightToWork }}
       </p>
     </div>

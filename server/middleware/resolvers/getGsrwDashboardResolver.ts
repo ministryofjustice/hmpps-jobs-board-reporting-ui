@@ -7,8 +7,12 @@ import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 import PrisonerSearchService from '../../services/prisonerSearchService'
 import WorkProfileService from '../../services/workProfileService'
+import getGsrwSummary from './utils/getGsrwSummary'
+import getWorkStatusProgress from './utils/getWorkStatusProgress'
+import getSupportNeededDocuments from './utils/getSupportNeededDocuments'
+import getSupportToWorkDeclinedReasons from './utils/getSupportToWorkDeclinedReasons'
 
-const getMjmaDashboardResolver =
+const getGsrwDashboardResolver =
   (prisonerSearchService: PrisonerSearchService, workProfileService: WorkProfileService): RequestHandler =>
   async (req, res, next): Promise<void> => {
     const { username } = res.locals.user
@@ -35,22 +39,22 @@ const getMjmaDashboardResolver =
             earliestReleaseDate: dateFromFormatted,
             latestReleaseDate,
           }),
-          workProfileService.getSummary(username, {
+          getGsrwSummary(workProfileService, username, {
             prisonId: userActiveCaseLoad.caseLoadId,
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted,
           }),
-          workProfileService.getWorkStatusProgress(username, {
+          getWorkStatusProgress(workProfileService, username, {
             prisonId: userActiveCaseLoad.caseLoadId,
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted,
           }),
-          workProfileService.getSupportNeededDocuments(username, {
+          getSupportNeededDocuments(workProfileService, username, {
             prisonId: userActiveCaseLoad.caseLoadId,
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted,
           }),
-          workProfileService.getSupportToWorkDeclinedReasons(username, {
+          getSupportToWorkDeclinedReasons(workProfileService, username, {
             prisonId: userActiveCaseLoad.caseLoadId,
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted,
@@ -70,4 +74,4 @@ const getMjmaDashboardResolver =
     }
   }
 
-export default getMjmaDashboardResolver
+export default getGsrwDashboardResolver
