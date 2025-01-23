@@ -1,0 +1,46 @@
+<div class="govuk-form-group filter-box govuk-!-margin-top-4">
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        {{ mojDatePicker({
+          id: "dateFrom",
+          name: "dateFrom",
+          label: {
+              text: "Date from (earliest)"
+          },
+          hint: {
+            text: "For example, 31/3/2024"
+          },
+          value: dateFrom
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-one-quarter">
+        {{ mojDatePicker({
+          id: "dateTo",
+          name: "dateTo",
+          label: {
+              text: "Date to (latest)"
+          },
+          hint: {
+            text: "For example, 31/3/2024"
+          },
+          value: dateTo
+        }) }}
+      </div>
+    </div>
+              
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+          <div class="govuk-button-group govuk-!-margin-top-6 govuk-!-margin-bottom-0">
+            <button class="govuk-button" data-module="govuk-button" data-qa="submit-filters">
+              View reports
+            </button>
+          </div>
+      </div>
+    </div>
+
+  </form>
+</div>

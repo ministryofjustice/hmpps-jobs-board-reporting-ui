@@ -1,33 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import expressMocks from '../../testutils/expressMocks'
 import getMjmaDashboardResolver from './getMjmaDashboardResolver'
+import expressMocks from '../../testutils/expressMocks'
+import logger from '../../../logger'
+import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
+import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
+import getMjmaSummary from './utils/getMjmaSummary'
+import getTotalApplicationsByStage from './utils/getTotalApplicationsByStage'
+import getLatestApplicationsByStage from './utils/getLatestApplicationsByStage'
+
+// Mock dependencies
+jest.mock('../../../logger')
+jest.mock('../../utils/getLastFullMonthStartDate')
+jest.mock('../../utils/getLastFullMonthEndDate')
+jest.mock('./utils/getMjmaSummary')
+jest.mock('./utils/getTotalApplicationsByStage')
+jest.mock('./utils/getLatestApplicationsByStage')
+jest.mock('../../services/jobService')
 
 describe('getMjmaDashboardResolver', () => {
   const { req, res, next } = expressMocks()
 
   res.locals.user = { username: 'mock_username' }
   res.locals.userActiveCaseLoad = { caseLoadId: 'MDI' }
-  req.query = { dateFrom: '01/03/2024', dateTo: '10/03/2024' }
-
-  const mockSummary = {
-    jobCount: 10,
-    totalHoursWorked: 50,
-    details: [{ jobId: 1, jobName: 'Cleaner', hoursWorked: 10 }],
-  }
-
-  const mockApplicationsByStage = [
-    {
-      applicationStatus: 'APPLICATION_MADE',
-      numberOfApplications: 26,
-    },
-  ]
-
-  const mockLatestApplicationsByStage = [
-    {
-      applicationStatus: 'APPLICATION_MADE',
-      numberOfApplications: 50,
-    },
-  ]
+  req.query = { dateFrom: '01/01/2024', dateTo: '31/01/2024' }
 
   const jobServiceMock = {
     getSummary: jest.fn(),
@@ -35,61 +30,96 @@ describe('getMjmaDashboardResolver', () => {
     getLatestApplicationsByStage: jest.fn(),
   }
 
-  const error = new Error('mock_error')
-
   const resolver = getMjmaDashboardResolver(jobServiceMock as any)
 
-  it('On error - Calls next with error', async () => {
-    jobServiceMock.getSummary.mockRejectedValue(error)
+  const mockSummary = { summary: 'summaryData' }
+  const mockTotalApplicationsByStage = { total: 'totalData' }
+  const mockLatestApplicationsByStage = { latest: 'latestData' }
+  const error = new Error('mock_error')
 
-    await resolver(req, res, next)
+  beforeEach(() => {
+    jest.resetAllMocks()
+    ;(getLastFullMonthStartDate as jest.Mock).mockReturnValue(new Date('2023-12-01'))
+    ;(getLastFullMonthEndDate as jest.Mock).mockReturnValue(new Date('2023-12-31'))
+    ;(getMjmaSummary as jest.Mock).mockResolvedValue(mockSummary)
+    ;(getTotalApplicationsByStage as jest.Mock).mockResolvedValue(mockTotalApplicationsByStage)
+    ;(getLatestApplicationsByStage as jest.Mock).mockResolvedValue(mockLatestApplicationsByStage)
+  })
 
-    expect(jobServiceMock.getSummary).toHaveBeenCalledWith('mock_username', {
-      prisonId: 'MDI',
-      dateFrom: '2024-03-01',
-      dateTo: '2024-03-10',
-    })
+  it('On error - Logs error and calls next with error', async () => {
+    ;(getMjmaSummary as jest.Mock).mockRejectedValue(error)
+
+    await resolver(req as any, res as any, next)
+
+    expect(logger.error).toHaveBeenCalledWith('Error getting data - MJMA dashboard data')
     expect(next).toHaveBeenCalledWith(error)
   })
 
-  it('On success - Attaches data to context and calls next', async () => {
-    jobServiceMock.getSummary.mockResolvedValue(mockSummary)
-    jobServiceMock.getTotalApplicationsByStage.mockResolvedValue(mockApplicationsByStage)
-    jobServiceMock.getLatestApplicationsByStage.mockResolvedValue(mockLatestApplicationsByStage)
+  it('On success - Populates req.context and calls next', async () => {
+    await resolver(req as any, res as any, next)
 
-    await resolver(req, res, next)
-
-    expect(jobServiceMock.getSummary).toHaveBeenCalledWith('mock_username', {
+    expect(getMjmaSummary).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
       prisonId: 'MDI',
-      dateFrom: '2024-03-01',
-      dateTo: '2024-03-10',
+      dateFrom: '2024-01-01',
+      dateTo: '2024-01-31',
     })
 
-    expect(jobServiceMock.getTotalApplicationsByStage).toHaveBeenCalledWith('mock_username', {
+    expect(getTotalApplicationsByStage).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
       prisonId: 'MDI',
-      dateFrom: '2024-03-01',
-      dateTo: '2024-03-10',
+      dateFrom: '2024-01-01',
+      dateTo: '2024-01-31',
     })
 
-    expect(jobServiceMock.getLatestApplicationsByStage).toHaveBeenCalledWith('mock_username', {
+    expect(getLatestApplicationsByStage).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
       prisonId: 'MDI',
-      dateFrom: '2024-03-01',
-      dateTo: '2024-03-10',
+      dateFrom: '2024-01-01',
+      dateTo: '2024-01-31',
     })
 
     expect(req.context.summary).toEqual(mockSummary)
-    expect(req.context.totalApplicationsByStage).toEqual(mockApplicationsByStage)
+    expect(req.context.totalApplicationsByStage).toEqual(mockTotalApplicationsByStage)
     expect(req.context.latestApplicationsByStage).toEqual(mockLatestApplicationsByStage)
+
+    expect(next).toHaveBeenCalledWith()
+  })
+
+  it('Handles missing date params - Uses default dates', async () => {
+    delete req.query.dateFrom
+    delete req.query.dateTo
+
+    await resolver(req as any, res as any, next)
+
+    expect(getLastFullMonthStartDate).toHaveBeenCalled()
+    expect(getLastFullMonthEndDate).toHaveBeenCalled()
+    expect(getMjmaSummary).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
+      prisonId: 'MDI',
+      dateFrom: '2023-12-01',
+      dateTo: '2023-12-31',
+    })
+
+    expect(getTotalApplicationsByStage).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
+      prisonId: 'MDI',
+      dateFrom: '2023-12-01',
+      dateTo: '2023-12-31',
+    })
+
+    expect(getLatestApplicationsByStage).toHaveBeenCalledWith(jobServiceMock, 'mock_username', {
+      prisonId: 'MDI',
+      dateFrom: '2023-12-01',
+      dateTo: '2023-12-31',
+    })
+
     expect(next).toHaveBeenCalledWith()
   })
 
   it('Handles invalid date format gracefully - Calls next with error', async () => {
     req.query.dateFrom = 'invalid-date'
-    req.query.dateTo = '10/03/2024'
+    req.query.dateTo = 'another-invalid-date'
 
-    await resolver(req, res, next)
+    await resolver(req as any, res as any, next)
 
     expect(next).toHaveBeenCalled()
     expect(next.mock.calls[0][0]).toBeInstanceOf(Error)
+    expect(next.mock.calls[0][0].message).toContain('Invalid time value')
   })
 })

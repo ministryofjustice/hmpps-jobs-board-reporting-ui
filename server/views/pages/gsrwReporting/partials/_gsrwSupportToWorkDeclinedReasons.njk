@@ -1,0 +1,28 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-6">
+      Reasons for not wanting support
+    </h3>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Type
+        </dt>
+        <dd class="govuk-summary-list__key">
+          Total
+        </dd>
+      </div>
+      {% for entry in supportToWorkDeclinedReasons %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ contentLookup.supportToWorkDeclinedReasons[entry.supportToWorkDeclinedReason] }}
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="supportToWorkDeclinedReasons_{{ entry.supportToWorkDeclinedReason }}_numberOfPrisoners">
+            {{ entry.numberOfPrisoners }}
+          </dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </div>
+</div>

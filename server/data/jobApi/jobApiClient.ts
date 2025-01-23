@@ -1,5 +1,6 @@
 import config from '../../config'
 import RestClient from '../restClient'
+import ApplicationsByStageResult from './interfaces/applicationsByStageResult'
 import JobSummaryResults from './interfaces/jobSummaryResults'
 
 export default class JobApiClient {
@@ -22,7 +23,7 @@ export default class JobApiClient {
   async getTotalApplicationsByStage(params: { prisonId: string; dateFrom: string; dateTo: string }) {
     const { prisonId, dateFrom, dateTo } = params
 
-    const results = await this.restClient.get<JobSummaryResults>({
+    const results = await this.restClient.get<ApplicationsByStageResult>({
       path: `/dashboard/applications-stage?prisonId=${prisonId}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
     })
 
@@ -32,7 +33,7 @@ export default class JobApiClient {
   async getLatestApplicationsByStage(params: { prisonId: string; dateFrom: string; dateTo: string }) {
     const { prisonId, dateFrom, dateTo } = params
 
-    const results = await this.restClient.get<JobSummaryResults>({
+    const results = await this.restClient.get<ApplicationsByStageResult>({
       path: `/dashboard/applications-status?prisonId=${prisonId}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
     })
 

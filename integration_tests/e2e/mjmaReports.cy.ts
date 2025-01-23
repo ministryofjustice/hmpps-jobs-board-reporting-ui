@@ -1,7 +1,7 @@
-import ReportsPage, { ReportingTableSelector } from '../pages/reports'
+import MjmaPage, { ReportingTableSelector } from '../pages/mjma'
 import Page from '../pages/page'
 
-context('Sign In', () => {
+context('Manage jobs and applications', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
@@ -14,7 +14,7 @@ context('Sign In', () => {
   })
 
   it('Reports - filters - validation messages', () => {
-    const reportsPage = Page.verifyOnPage(ReportsPage)
+    const reportsPage = Page.verifyOnPage(MjmaPage)
 
     reportsPage.dateFrom().type('1/11/2024')
 
@@ -54,7 +54,7 @@ context('Sign In', () => {
   })
 
   it('Reports - Check content', () => {
-    const reportsPage = Page.verifyOnPage(ReportsPage)
+    const reportsPage = Page.verifyOnPage(MjmaPage)
 
     // Check summary
     reportsPage.numberOfApplicants().contains('16')

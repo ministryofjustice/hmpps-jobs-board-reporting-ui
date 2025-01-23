@@ -1,6 +1,6 @@
 import Page, { PageElement } from './page'
 
-export default class ReportsPage extends Page {
+export default class MjmaPage extends Page {
   constructor() {
     super('Work after release reporting')
   }

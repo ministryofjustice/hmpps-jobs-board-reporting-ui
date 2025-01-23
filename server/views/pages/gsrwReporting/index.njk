@@ -1,5 +1,8 @@
 {% extends "../../partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
+{% from "../../macros/error-summary/macro.njk" import errorSummary %}
+{% from "../../macros/charts/barChart.njk" import barChart %}
 
 {% set title = 'Work after release reporting' %}
 
@@ -24,6 +27,8 @@
 
   <div class="govuk-grid-row govuk-!-display-none-print">
     <div class="govuk-grid-column-full">
+      {{ errorSummary(errors) }}
+
       <h1 class="govuk-heading-l govuk-!-margin-bottom-7" xmlns="http://www.w3.org/1999/html">{{ title }}</h1>
 
       <div class="govuk-grid-row">
@@ -41,6 +46,29 @@
           </nav>
         </div>
       </div>
+
+      {% include './partials/_gsrwFilters.njk' %}
+
+      <p class="govuk-body" data-qa="date-display">
+        Report period: {{ dateFromDisplay }} to {{ dateToDisplay }}
+      </p>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_gsrwSummary.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_gsrwWorkStatusProgress.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_gsrwSupportNeededDocuments.njk' %}
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      {% include './partials/_gsrwSupportToWorkDeclinedReasons.njk' %}
+
     </div>
   </div>
  

@@ -1,0 +1,30 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-m">
+      Documentation and support needed
+    </h3>
+
+    <p class="govuk-body govuk-!-margin-bottom-6">Number of prisoners seen with preparing for work needs in this period. </p>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Type
+        </dt>
+        <dd class="govuk-summary-list__key">
+          Total
+        </dd>
+      </div>
+      {% for entry in supportNeededDocuments %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ contentLookup.supportNeededDocuments[entry.actionTodo] }}
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="supportNeededDocuments_{{ entry.actionTodo }}_numberOfPrisoners">
+            {{ entry.numberOfPrisoners }}
+          </dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </div>
+</div>
