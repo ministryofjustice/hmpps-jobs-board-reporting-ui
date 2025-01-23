@@ -1,17 +1,31 @@
 import GsrwPage from '../pages/gsrw'
+import MjmaPage from '../pages/mjma'
 import Page from '../pages/page'
 
 context('Get someone ready to work reports', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
+
+    // Mock homepage end points
     cy.task('getUserActiveCaseLoad')
     cy.task('getJobSummary')
     cy.task('getTotalApplicationsByStage')
     cy.task('getLatestApplicationsByStage')
 
     cy.signIn()
-    cy.visit('/gsrw')
+
+    const reportsPage = Page.verifyOnPage(MjmaPage)
+
+    // Mock gsrw endpoints
+    cy.task('getWorkProfileSummary')
+    cy.task('getWorkStatusProgress')
+    cy.task('getSupportNeededDocuments')
+    cy.task('getSupportToWorkDeclinedReasons')
+
+    cy.task('getPrisonersByReleaseDate')
+
+    reportsPage.gsrwTab().click()
   })
 
   it('Reports - filters - validation messages', () => {
@@ -58,7 +72,7 @@ context('Get someone ready to work reports', () => {
     const reportsPage = Page.verifyOnPage(GsrwPage)
 
     // Check summary
-    reportsPage.numberOfPrisoners12Weeks().contains('10')
+    reportsPage.numberOfPrisoners12Weeks().contains('50')
     reportsPage.numberOfPrisoners().contains('34')
     reportsPage.numberOfSupportDeclined().contains('16')
     reportsPage.numberOfNoRightToWork().contains('21')
@@ -85,9 +99,9 @@ context('Get someone ready to work reports', () => {
     reportsPage.supportToWorkDeclinedReasons('SELF_EMPLOYED').contains('13')
 
     // Check work status progress
-    reportsPage.workStatusProgress('NO_RIGHT_TO_WORK').contains('10')
-    reportsPage.workStatusProgress('SUPPORT_DECLINED').contains('10')
-    reportsPage.workStatusProgress('SUPPORT_NEEDED').contains('10')
-    reportsPage.workStatusProgress('READY_TO_WORK').contains('10')
+    reportsPage.workStatusProgress('NO_RIGHT_TO_WORK').contains('21')
+    reportsPage.workStatusProgress('SUPPORT_DECLINED').contains('16')
+    reportsPage.workStatusProgress('SUPPORT_NEEDED').contains('22')
+    reportsPage.workStatusProgress('READY_TO_WORK').contains('12')
   })
 })
