@@ -10,7 +10,7 @@ const getPrisonersByReleaseDate = () =>
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: {
-        numberOfElements: 50,
+        numberOfElements: 89,
       },
     },
   })

@@ -9,6 +9,7 @@ const supportToWorkDeclinedReasonsOrder: string[] = [
   'RETIRED',
   'RETURNING_TO_JOB',
   'SELF_EMPLOYED',
+  'OTHER',
 ]
 
 export default supportToWorkDeclinedReasonsOrder

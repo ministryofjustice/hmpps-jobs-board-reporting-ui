@@ -72,7 +72,7 @@ context('Get someone ready to work reports', () => {
     const reportsPage = Page.verifyOnPage(GsrwPage)
 
     // Check summary
-    reportsPage.numberOfPrisoners12Weeks().contains('50')
+    reportsPage.numberOfPrisoners12Weeks().contains('89')
     reportsPage.numberOfPrisoners().contains('34')
     reportsPage.numberOfSupportDeclined().contains('16')
     reportsPage.numberOfNoRightToWork().contains('21')
@@ -97,8 +97,10 @@ context('Get someone ready to work reports', () => {
     reportsPage.supportToWorkDeclinedReasons('RETIRED').contains('7')
     reportsPage.supportToWorkDeclinedReasons('RETURNING_TO_JOB').contains('2')
     reportsPage.supportToWorkDeclinedReasons('SELF_EMPLOYED').contains('13')
+    reportsPage.supportToWorkDeclinedReasons('OTHER').contains('0')
 
     // Check work status progress
+    reportsPage.workStatusProgress('NOT_STARTED').contains('18')
     reportsPage.workStatusProgress('NO_RIGHT_TO_WORK').contains('21')
     reportsPage.workStatusProgress('SUPPORT_DECLINED').contains('16')
     reportsPage.workStatusProgress('SUPPORT_NEEDED').contains('22')

@@ -142,6 +142,10 @@ const getSupportToWorkDeclinedReasons = () =>
           supportToWorkDeclinedReason: 'SELF_EMPLOYED',
           numberOfPrisoners: 13,
         },
+        {
+          supportToWorkDeclinedReason: 'OTHER',
+          numberOfPrisoners: 0,
+        },
       ],
     },
   })
