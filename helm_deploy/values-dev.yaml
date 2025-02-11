@@ -27,4 +27,4 @@ generic-service:
     AUDIT_ENABLED: "false"
 
 generic-prometheus-alerts:
-  alertSeverity: prison-education-alerts
+  alertSeverity: education-alerts-non-prod
