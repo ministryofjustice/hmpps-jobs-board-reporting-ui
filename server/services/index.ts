@@ -1,6 +1,5 @@
 import { dataAccess } from '../data'
 import AuditService from './auditService'
-import ComponentService from './componentService'
 import JobService from './jobService'
 import PrisonerSearchService from './prisonerSearchService'
 import UserService from './userService'
@@ -14,12 +13,10 @@ export const services = () => {
   const workProfileService = new WorkProfileService(hmppsAuthClient)
   const prisonerSearchService = new PrisonerSearchService(hmppsAuthClient)
   const userService = new UserService(hmppsAuthClient)
-  const componentService = new ComponentService()
 
   return {
     applicationInfo,
     auditService,
-    componentService,
     jobService,
     workProfileService,
     prisonerSearchService,

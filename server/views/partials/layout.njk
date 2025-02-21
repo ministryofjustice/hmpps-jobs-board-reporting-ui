@@ -3,38 +3,26 @@
 {% block head %}
   <link href="{{ '/assets/css/app.css' | assetMap }}" rel="stylesheet"/>
 
-  {% if feComponents.jsIncludes %}
-      {% for js in feComponents.jsIncludes %}
-        <script src="{{ js }}" nonce="{{ cspNonce }}"></script>
-      {% endfor %}
-    {% endif %}
+  {% for js in feComponents.jsIncludes %}
+      <script src="{{ js }}" nonce="{{ cspNonce }}"></script>
+  {% endfor %}
 
-    {% if feComponents.cssIncludes %}
-      {% for css in feComponents.cssIncludes %}
-        <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet" />
-      {% endfor %}
-    {% endif %}
+  {% for css in feComponents.cssIncludes %}
+      <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet" />
+  {% endfor %}
 {% endblock %}
 
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {% if feComponents.header %}
-    {{ feComponents.header | safe }}
-  {% else %}
-    {% include "./header.njk" %}
-  {% endif %}
+  {{ feComponents.header | safe }}
 {% endblock %}
 
 {% block bodyStart %}
 {% endblock %}
 
 {% block footer %}
-  {% if feComponents.footer %}
-    {{ feComponents.footer | safe }}
-  {% else %}
-    {% include "./footer.njk" %}
-  {% endif %}
+  {{ feComponents.footer | safe }}
 {% endblock %}
 
 {% block bodyEnd %}
