@@ -26,6 +26,7 @@ export default function populateCurrentUser(): RequestHandler {
 
       if (res.locals.user.authSource === 'nomis') {
         res.locals.user.staffId = parseInt(userId, 10) || undefined
+        res.locals.isPrisonUser = true
       }
 
       next()

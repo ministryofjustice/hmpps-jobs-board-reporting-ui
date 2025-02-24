@@ -1,6 +1,6 @@
 import express from 'express'
-
 import createError from 'http-errors'
+import dpsComponents from '@ministryofjustice/hmpps-connect-dps-components'
 
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
@@ -15,7 +15,6 @@ import setUpStaticResources from './middleware/setUpStaticResources'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
-import getFrontendComponents from './middleware/getFrontendComponents'
 import setUpLocals from './middleware/setUpLocals'
 
 import routes from './routes'
@@ -23,6 +22,8 @@ import type { Services } from './services'
 import expressContext from './middleware/expressContext'
 import sanitizeBody from './middleware/sanitizeBody'
 import sanitizeQuery from './middleware/sanitizeQuery'
+import config from './config'
+import logger from '../logger'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -50,8 +51,12 @@ export default function createApp(services: Services): express.Application {
   app.use(sanitizeQuery)
 
   // Get front end components for DPS header
-  app.get('*', getFrontendComponents(services))
-  app.post('*', getFrontendComponents(services))
+  app.use(
+    dpsComponents.getPageComponents({
+      dpsUrl: config.dpsHomeUrl,
+      logger,
+    }),
+  )
 
   app.use(routes(services))
 
