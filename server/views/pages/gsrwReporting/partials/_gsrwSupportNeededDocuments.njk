@@ -1,5 +1,5 @@
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h3 class="govuk-heading-m">
       Documentation and support needed
     </h3>
@@ -12,7 +12,10 @@
           Type
         </dt>
         <dd class="govuk-summary-list__key">
-          Total
+          Within 12 weeks of release
+        </dd>
+        <dd class="govuk-summary-list__key">
+          More than 12 weeks from release
         </dd>
       </div>
       {% for entry in supportNeededDocuments %}
@@ -20,8 +23,11 @@
           <dt class="govuk-summary-list__key">
             {{ contentLookup.supportNeededDocuments[entry.actionTodo] }}
           </dt>
-          <dd class="govuk-summary-list__value" data-qa="supportNeededDocuments_{{ entry.actionTodo }}_numberOfPrisoners">
-            {{ entry.numberOfPrisoners }}
+          <dd class="govuk-summary-list__value" data-qa="supportNeededDocuments_{{ entry.actionTodo }}_numberOfPrisonersWithin12Weeks">
+            {{ entry.numberOfPrisonersWithin12Weeks }}
+          </dd>
+          <dd class="govuk-summary-list__value" data-qa="supportNeededDocuments_{{ entry.actionTodo }}_numberOfPrisonersOver12Weeks">
+            {{ entry.numberOfPrisonersOver12Weeks }}
           </dd>
         </div>
       {% endfor %}

@@ -16,7 +16,8 @@ const getGsrwSummary = async (
     // Handle no data
     if (err?.status === 404 || err?.status === 500) {
       return {
-        numberOfPrisoners: 0,
+        numberOfPrisonersWithin12Weeks: 0,
+        numberOfPrisonersOver12Weeks: 0,
         numberOfSupportDeclined: 0,
         numberOfNoRightToWork: 0,
       }

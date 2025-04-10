@@ -39,7 +39,8 @@ describe('getGsrwSummary', () => {
     const result = await getGsrwSummary(serviceMock as any, username, params)
 
     expect(result).toEqual({
-      numberOfPrisoners: 0,
+      numberOfPrisonersOver12Weeks: 0,
+      numberOfPrisonersWithin12Weeks: 0,
       numberOfSupportDeclined: 0,
       numberOfNoRightToWork: 0,
     })

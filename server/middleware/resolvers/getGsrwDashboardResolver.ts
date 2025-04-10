@@ -28,40 +28,54 @@ const getGsrwDashboardResolver =
 
       // Calculate and format date params
       const latestReleaseDate = format(addWeeks(dateToDt, 12), 'yyyy-MM-dd')
+      const latestReleaseDateAll = format(addWeeks(dateToDt, 5200), 'yyyy-MM-dd')
       const dateFromFormatted = format(dateFromDt, 'yyyy-MM-dd')
       const dateToFormatted = format(dateToDt, 'yyyy-MM-dd')
 
       // Get dashboard data
-      const [numberOfPrisoners, summary, workStatusProgress, supportNeededDocuments, supportToWorkDeclinedReasons] =
-        await Promise.all([
-          prisonerSearchService.getPrisonersByReleaseDateCount(username, {
-            prisonIds: [userActiveCaseLoad.caseLoadId],
-            earliestReleaseDate: dateFromFormatted,
-            latestReleaseDate,
-          }),
-          getGsrwSummary(workProfileService, username, {
-            prisonId: userActiveCaseLoad.caseLoadId,
-            dateFrom: dateFromFormatted,
-            dateTo: dateToFormatted,
-          }),
-          getWorkStatusProgress(workProfileService, username, {
-            prisonId: userActiveCaseLoad.caseLoadId,
-            dateFrom: dateFromFormatted,
-            dateTo: dateToFormatted,
-          }),
-          getSupportNeededDocuments(workProfileService, username, {
-            prisonId: userActiveCaseLoad.caseLoadId,
-            dateFrom: dateFromFormatted,
-            dateTo: dateToFormatted,
-          }),
-          getSupportToWorkDeclinedReasons(workProfileService, username, {
-            prisonId: userActiveCaseLoad.caseLoadId,
-            dateFrom: dateFromFormatted,
-            dateTo: dateToFormatted,
-          }),
-        ])
+      const [
+        numberOfPrisonersWithin12Weeks = 0,
+        numberOfPrisonersAll = 0,
+        summary,
+        workStatusProgress,
+        supportNeededDocuments,
+        supportToWorkDeclinedReasons,
+      ] = await Promise.all([
+        prisonerSearchService.getPrisonersByReleaseDateCount(username, {
+          prisonIds: [userActiveCaseLoad.caseLoadId],
+          earliestReleaseDate: dateFromFormatted,
+          latestReleaseDate,
+        }),
+        prisonerSearchService.getPrisonersByReleaseDateCount(username, {
+          prisonIds: [userActiveCaseLoad.caseLoadId],
+          earliestReleaseDate: dateFromFormatted,
+          latestReleaseDate: latestReleaseDateAll,
+        }),
+        getGsrwSummary(workProfileService, username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromFormatted,
+          dateTo: dateToFormatted,
+        }),
+        getWorkStatusProgress(workProfileService, username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromFormatted,
+          dateTo: dateToFormatted,
+        }),
+        getSupportNeededDocuments(workProfileService, username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromFormatted,
+          dateTo: dateToFormatted,
+        }),
+        getSupportToWorkDeclinedReasons(workProfileService, username, {
+          prisonId: userActiveCaseLoad.caseLoadId,
+          dateFrom: dateFromFormatted,
+          dateTo: dateToFormatted,
+        }),
+      ])
 
-      req.context.numberOfPrisoners = numberOfPrisoners || 0
+      req.context.numberOfPrisonersWithin12Weeks = numberOfPrisonersWithin12Weeks
+      req.context.numberOfPrisonersOver12Weeks = numberOfPrisonersAll - numberOfPrisonersWithin12Weeks
+      req.context.numberOfPrisonersAll = numberOfPrisonersAll
       req.context.summary = summary
       req.context.workStatusProgress = workStatusProgress
       req.context.supportNeededDocuments = supportNeededDocuments

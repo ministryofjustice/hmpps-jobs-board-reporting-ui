@@ -13,8 +13,15 @@ import supportToWorkDeclinedReasonsOrder from '../../constants/supportToWorkDecl
 export default class GsrwReportingController {
   public get: RequestHandler = async (req, res, next): Promise<void> => {
     const { dateFrom, dateTo } = req.query as { dateFrom?: string; dateTo?: string }
-    const { numberOfPrisoners, summary, workStatusProgress, supportNeededDocuments, supportToWorkDeclinedReasons } =
-      req.context
+    const {
+      numberOfPrisonersAll = 0,
+      numberOfPrisonersWithin12Weeks = 0,
+      numberOfPrisonersOver12Weeks = 0,
+      summary,
+      workStatusProgress,
+      supportNeededDocuments,
+      supportToWorkDeclinedReasons,
+    } = req.context
 
     const workStatusProgressSorted = sortByArray({
       source: workStatusProgress?.statusCounts,
@@ -34,8 +41,13 @@ export default class GsrwReportingController {
       sourceTransformer: (item: { supportToWorkDeclinedReason: string }) => item.supportToWorkDeclinedReason,
     })
 
-    const statusCount = workStatusProgress?.statusCounts?.reduce(
-      (sum: number, status: { numberOfPrisoners: number }) => sum + status.numberOfPrisoners,
+    const statusCountWithin12Weeks = workStatusProgress?.statusCounts?.reduce(
+      (sum: number, status: { numberOfPrisonersWithin12Weeks: number }) => sum + status.numberOfPrisonersWithin12Weeks,
+      0,
+    )
+
+    const statusCountOver12Weeks = workStatusProgress?.statusCounts?.reduce(
+      (sum: number, status: { numberOfPrisonersOver12Weeks: number }) => sum + status.numberOfPrisonersOver12Weeks,
       0,
     )
 
@@ -49,10 +61,19 @@ export default class GsrwReportingController {
         dateToDisplay: dateTo
           ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
-        numberOfPrisoners,
+        numberOfPrisonersAll,
+        numberOfPrisonersWithin12Weeks,
+        numberOfPrisonersOver12Weeks,
         summary,
         numberOfPrisonersStatusChange: workStatusProgress?.numberOfPrisonersStatusChange,
-        notStartedCount: numberOfPrisoners - statusCount < 0 ? 0 : numberOfPrisoners - statusCount,
+        notStartedCountWithin12Weeks:
+          numberOfPrisonersWithin12Weeks - statusCountWithin12Weeks < 0
+            ? 0
+            : numberOfPrisonersWithin12Weeks - statusCountWithin12Weeks,
+        notStartedCountOver12Weeks:
+          numberOfPrisonersOver12Weeks - statusCountOver12Weeks < 0
+            ? 0
+            : numberOfPrisonersOver12Weeks - statusCountOver12Weeks,
         workStatusProgress: workStatusProgressSorted,
         supportNeededDocuments: supportNeededDocumentsSorted,
         supportToWorkDeclinedReasons: supportToWorkDeclinedReasonsSorted,

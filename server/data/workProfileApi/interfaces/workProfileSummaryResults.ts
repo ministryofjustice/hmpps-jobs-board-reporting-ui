@@ -1,5 +1,6 @@
 export default interface WorkProfileSummaryResults {
-  numberOfPrisoners: number
+  numberOfPrisonersWithin12Weeks: number
+  numberOfPrisonersOver12Weeks: number
   numberOfSupportDeclined: number
   numberOfNoRightToWork: number
 }
