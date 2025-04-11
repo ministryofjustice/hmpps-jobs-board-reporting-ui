@@ -8,8 +8,18 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners 12 weeks from release
       </h4>
-      <p class="reporting-big-number" data-qa="numberOfPrisoners12Weeks">
-        {{ numberOfPrisoners }}
+      <p class="reporting-big-number" data-qa="numberOfPrisonersWithin12Weeks">
+        {{ numberOfPrisonersWithin12Weeks }}
+      </p>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="reporting-stats">
+      <h4 class="govuk-heading-s">
+        Total establishment roll
+      </h4>
+      <p class="reporting-big-number" data-qa="numberOfPrisonersAll">
+        {{ numberOfPrisonersAll }}
       </p>
     </div>
   </div>
@@ -21,9 +31,20 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners worked with
       </h4>
-      <p class="reporting-big-number" data-qa="numberOfPrisoners">
-        {{ summary.numberOfPrisoners }}
-      </p>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <p class="reporting-big-number" data-qa="summary_numberOfPrisonersWithin12Weeks">
+            {{ summary.numberOfPrisonersWithin12Weeks }}
+          </p>
+          <p>Within 12 weeks of release</p>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <p class="reporting-big-number" data-qa="summary_numberOfPrisonersOver12Weeks">
+            {{ summary.numberOfPrisonersOver12Weeks }}
+          </p>
+          <p>More than 12 weeks from release</p>
+        </div>
+      </div>
     </div>
   </div>
   <div class="govuk-grid-column-one-third">
@@ -31,7 +52,7 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners who do not want support
       </h4>
-      <p class="reporting-big-number" data-qa="numberOfSupportDeclined">
+      <p class="reporting-big-number" data-qa="summary_numberOfSupportDeclined">
         {{ summary.numberOfSupportDeclined }}
       </p>
     </div>
@@ -41,7 +62,7 @@
       <h4 class="govuk-heading-s">
         Total number of prisoners with no right to work
       </h4>
-      <p class="reporting-big-number" data-qa="numberOfNoRightToWork">
+      <p class="reporting-big-number" data-qa="summary_numberOfNoRightToWork">
         {{ summary.numberOfNoRightToWork }}
       </p>
     </div>

@@ -1,4 +1,5 @@
 export default interface SupportNeededDocumentsResults {
   actionTodo: string
-  numberOfPrisoners: number
+  numberOfPrisonersWithin12Weeks: number
+  numberOfPrisonersOver12Weeks: number
 }

@@ -93,7 +93,9 @@ describe('getGsrwDashboardResolver', () => {
       dateTo: '2024-01-31',
     })
 
-    expect(req.context.numberOfPrisoners).toEqual(mockPrisonersCount)
+    expect(req.context.numberOfPrisonersWithin12Weeks).toEqual(mockPrisonersCount)
+    expect(req.context.numberOfPrisonersOver12Weeks).toEqual(0)
+    expect(req.context.numberOfPrisonersAll).toEqual(mockPrisonersCount)
     expect(req.context.summary).toEqual(mockSummary)
     expect(req.context.workStatusProgress).toEqual(mockWorkStatusProgress)
     expect(req.context.supportNeededDocuments).toEqual(mockSupportNeededDocuments)

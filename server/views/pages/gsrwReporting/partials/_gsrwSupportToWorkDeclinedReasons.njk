@@ -1,5 +1,5 @@
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h3 class="govuk-heading-m govuk-!-margin-bottom-6">
       Reasons for not wanting support
     </h3>
@@ -10,7 +10,10 @@
           Type
         </dt>
         <dd class="govuk-summary-list__key">
-          Total
+          Within 12 weeks of release
+        </dd>
+        <dd class="govuk-summary-list__key">
+          More than 12 weeks from release
         </dd>
       </div>
       {% for entry in supportToWorkDeclinedReasons %}
@@ -18,8 +21,11 @@
           <dt class="govuk-summary-list__key">
             {{ contentLookup.supportToWorkDeclinedReasons[entry.supportToWorkDeclinedReason] }}
           </dt>
-          <dd class="govuk-summary-list__value" data-qa="supportToWorkDeclinedReasons_{{ entry.supportToWorkDeclinedReason }}_numberOfPrisoners">
-            {{ entry.numberOfPrisoners }}
+          <dd class="govuk-summary-list__value" data-qa="supportToWorkDeclinedReasons_{{ entry.supportToWorkDeclinedReason }}_numberOfPrisonersWithin12Weeks">
+            {{ entry.numberOfPrisonersWithin12Weeks }}
+          </dd>
+          <dd class="govuk-summary-list__value" data-qa="supportToWorkDeclinedReasons_{{ entry.supportToWorkDeclinedReason }}_numberOfPrisonersOver12Weeks">
+            {{ entry.numberOfPrisonersOver12Weeks }}
           </dd>
         </div>
       {% endfor %}

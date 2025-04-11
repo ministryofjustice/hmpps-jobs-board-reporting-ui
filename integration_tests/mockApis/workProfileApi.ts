@@ -10,7 +10,8 @@ const getWorkProfileSummary = () =>
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: {
-        numberOfPrisoners: 34,
+        numberOfPrisonersWithin12Weeks: 34,
+        numberOfPrisonersOver12Weeks: 6,
         numberOfSupportDeclined: 16,
         numberOfNoRightToWork: 21,
       },
@@ -31,19 +32,23 @@ const getWorkStatusProgress = () =>
         statusCounts: [
           {
             profileStatus: 'NO_RIGHT_TO_WORK',
-            numberOfPrisoners: 21,
+            numberOfPrisonersWithin12Weeks: 21,
+            numberOfPrisonersOver12Weeks: 6,
           },
           {
             profileStatus: 'SUPPORT_DECLINED',
-            numberOfPrisoners: 16,
+            numberOfPrisonersWithin12Weeks: 16,
+            numberOfPrisonersOver12Weeks: 0,
           },
           {
             profileStatus: 'SUPPORT_NEEDED',
-            numberOfPrisoners: 22,
+            numberOfPrisonersWithin12Weeks: 22,
+            numberOfPrisonersOver12Weeks: 2,
           },
           {
             profileStatus: 'READY_TO_WORK',
-            numberOfPrisoners: 12,
+            numberOfPrisonersWithin12Weeks: 12,
+            numberOfPrisonersOver12Weeks: 1,
           },
         ],
       },
@@ -62,31 +67,38 @@ const getSupportNeededDocuments = () =>
       jsonBody: [
         {
           actionTodo: 'BANK_ACCOUNT',
-          numberOfPrisoners: 2,
+          numberOfPrisonersWithin12Weeks: 2,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           actionTodo: 'CV_AND_COVERING_LETTER',
-          numberOfPrisoners: 22,
+          numberOfPrisonersWithin12Weeks: 22,
+          numberOfPrisonersOver12Weeks: 3,
         },
         {
           actionTodo: 'DISCLOSURE_LETTER',
-          numberOfPrisoners: 12,
+          numberOfPrisonersWithin12Weeks: 12,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           actionTodo: 'EMAIL',
-          numberOfPrisoners: 8,
+          numberOfPrisonersWithin12Weeks: 8,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           actionTodo: 'HOUSING',
-          numberOfPrisoners: 21,
+          numberOfPrisonersWithin12Weeks: 21,
+          numberOfPrisonersOver12Weeks: 1,
         },
         {
           actionTodo: 'ID',
-          numberOfPrisoners: 18,
+          numberOfPrisonersWithin12Weeks: 18,
+          numberOfPrisonersOver12Weeks: 3,
         },
         {
           actionTodo: 'PHONE',
-          numberOfPrisoners: 8,
+          numberOfPrisonersWithin12Weeks: 8,
+          numberOfPrisonersOver12Weeks: 1,
         },
       ],
     },
@@ -104,47 +116,58 @@ const getSupportToWorkDeclinedReasons = () =>
       jsonBody: [
         {
           supportToWorkDeclinedReason: 'ALREADY_HAS_WORK',
-          numberOfPrisoners: 4,
+          numberOfPrisonersWithin12Weeks: 4,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           supportToWorkDeclinedReason: 'LIMIT_THEIR_ABILITY',
-          numberOfPrisoners: 12,
+          numberOfPrisonersWithin12Weeks: 12,
+          numberOfPrisonersOver12Weeks: 1,
         },
         {
           supportToWorkDeclinedReason: 'FULL_TIME_CARER',
-          numberOfPrisoners: 4,
+          numberOfPrisonersWithin12Weeks: 4,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           supportToWorkDeclinedReason: 'HOUSING_NOT_IN_PLACE',
-          numberOfPrisoners: 11,
+          numberOfPrisonersWithin12Weeks: 11,
+          numberOfPrisonersOver12Weeks: 2,
         },
         {
           supportToWorkDeclinedReason: 'LACKS_CONFIDENCE_OR_MOTIVATION',
-          numberOfPrisoners: 3,
+          numberOfPrisonersWithin12Weeks: 3,
+          numberOfPrisonersOver12Weeks: 1,
         },
         {
           supportToWorkDeclinedReason: 'HEALTH',
-          numberOfPrisoners: 4,
+          numberOfPrisonersWithin12Weeks: 4,
+          numberOfPrisonersOver12Weeks: 1,
         },
         {
           supportToWorkDeclinedReason: 'NO_REASON',
-          numberOfPrisoners: 2,
+          numberOfPrisonersWithin12Weeks: 2,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           supportToWorkDeclinedReason: 'RETIRED',
-          numberOfPrisoners: 7,
+          numberOfPrisonersWithin12Weeks: 7,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           supportToWorkDeclinedReason: 'RETURNING_TO_JOB',
-          numberOfPrisoners: 2,
+          numberOfPrisonersWithin12Weeks: 2,
+          numberOfPrisonersOver12Weeks: 0,
         },
         {
           supportToWorkDeclinedReason: 'SELF_EMPLOYED',
-          numberOfPrisoners: 13,
+          numberOfPrisonersWithin12Weeks: 13,
+          numberOfPrisonersOver12Weeks: 2,
         },
         {
           supportToWorkDeclinedReason: 'OTHER',
-          numberOfPrisoners: 0,
+          numberOfPrisonersWithin12Weeks: 0,
+          numberOfPrisonersOver12Weeks: 0,
         },
       ],
     },

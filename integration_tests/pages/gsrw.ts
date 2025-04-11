@@ -22,20 +22,33 @@ export default class GsrwPage extends Page {
   submitButton = (): PageElement => cy.get('[data-qa=submit-filters]')
 
   // Content
-  numberOfPrisoners12Weeks = (): PageElement => cy.get('[data-qa=numberOfPrisoners12Weeks]')
+  numberOfPrisonersWithin12Weeks = (): PageElement => cy.get('[data-qa=numberOfPrisonersWithin12Weeks]')
 
-  numberOfPrisoners = (): PageElement => cy.get('[data-qa=numberOfPrisoners]')
+  numberOfPrisonersAll = (): PageElement => cy.get('[data-qa=numberOfPrisonersAll]')
 
-  numberOfSupportDeclined = (): PageElement => cy.get('[data-qa=numberOfSupportDeclined]')
+  summaryNumberOfPrisonersWithin12Weeks = (): PageElement => cy.get('[data-qa=summary_numberOfPrisonersWithin12Weeks]')
 
-  numberOfNoRightToWork = (): PageElement => cy.get('[data-qa=numberOfNoRightToWork]')
+  summaryNumberOfPrisonersOver12Weeks = (): PageElement => cy.get('[data-qa=summary_numberOfPrisonersOver12Weeks]')
 
-  supportNeededDocuments = (actionTodo: string): PageElement =>
-    cy.get(`[data-qa=supportNeededDocuments_${actionTodo}_numberOfPrisoners]`)
+  summaryNumberOfSupportDeclined = (): PageElement => cy.get('[data-qa=summary_numberOfSupportDeclined]')
 
-  supportToWorkDeclinedReasons = (supportToWorkDeclinedReason: string): PageElement =>
-    cy.get(`[data-qa=supportToWorkDeclinedReasons_${supportToWorkDeclinedReason}_numberOfPrisoners]`)
+  summaryNumberOfNoRightToWork = (): PageElement => cy.get('[data-qa=summary_numberOfNoRightToWork]')
 
-  workStatusProgress = (profileStatus: string): PageElement =>
-    cy.get(`[data-qa=workStatusProgress_${profileStatus}_numberOfPrisoners]`)
+  supportNeededDocumentsWithin12Weeks = (actionTodo: string): PageElement =>
+    cy.get(`[data-qa=supportNeededDocuments_${actionTodo}_numberOfPrisonersWithin12Weeks]`)
+
+  supportToWorkDeclinedReasonsWithin12Weeks = (supportToWorkDeclinedReason: string): PageElement =>
+    cy.get(`[data-qa=supportToWorkDeclinedReasons_${supportToWorkDeclinedReason}_numberOfPrisonersWithin12Weeks]`)
+
+  workStatusProgressWithin12Weeks = (profileStatus: string): PageElement =>
+    cy.get(`[data-qa=workStatusProgress_${profileStatus}_numberOfPrisonersWithin12Weeks]`)
+
+  supportNeededDocumentsOver12Weeks = (actionTodo: string): PageElement =>
+    cy.get(`[data-qa=supportNeededDocuments_${actionTodo}_numberOfPrisonersOver12Weeks]`)
+
+  supportToWorkDeclinedReasonsOver12Weeks = (supportToWorkDeclinedReason: string): PageElement =>
+    cy.get(`[data-qa=supportToWorkDeclinedReasons_${supportToWorkDeclinedReason}_numberOfPrisonersOver12Weeks]`)
+
+  workStatusProgressOver12Weeks = (profileStatus: string): PageElement =>
+    cy.get(`[data-qa=workStatusProgress_${profileStatus}_numberOfPrisonersOver12Weeks]`)
 }

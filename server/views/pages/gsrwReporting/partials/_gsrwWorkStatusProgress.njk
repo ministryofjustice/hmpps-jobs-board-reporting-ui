@@ -1,5 +1,5 @@
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h3 class="govuk-heading-m govuk-!-margin-bottom-6">
       Work status progress
     </h3>
@@ -21,15 +21,21 @@
           Status
         </dt>
         <dd class="govuk-summary-list__key">
-          Total
+          Within 12 weeks of release
+        </dd>
+        <dd class="govuk-summary-list__key">
+          More than 12 weeks from release
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Not started
         </dt>
-        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisoners">
-          {{ notStartedCount }}
+        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisonersWithin12Weeks">
+          {{ notStartedCountWithin12Weeks }}
+        </dd>
+        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisonersOver12Weeks">
+          {{ notStartedCountOver12Weeks }}
         </dd>
       </div>
       {% for entry in workStatusProgress %}
@@ -37,8 +43,11 @@
           <dt class="govuk-summary-list__key">
             {{ contentLookup.workStatusProgress[entry.profileStatus] }}
           </dt>
-          <dd class="govuk-summary-list__value" data-qa="workStatusProgress_{{ entry.profileStatus }}_numberOfPrisoners">
-            {{ entry.numberOfPrisoners }}
+          <dd class="govuk-summary-list__value" data-qa="workStatusProgress_{{ entry.profileStatus }}_numberOfPrisonersWithin12Weeks">
+            {{ entry.numberOfPrisonersWithin12Weeks }}
+          </dd>
+          <dd class="govuk-summary-list__value" data-qa="workStatusProgress_{{ entry.profileStatus }}_numberOfPrisonersOver12Weeks">
+            {{ entry.numberOfPrisonersOver12Weeks }}
           </dd>
         </div>
       {% endfor %}

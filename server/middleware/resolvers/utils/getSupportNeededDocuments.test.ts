@@ -50,31 +50,38 @@ describe('getSupportNeededDocuments', () => {
     expect(result).toEqual([
       {
         actionTodo: 'BANK_ACCOUNT',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'CV_AND_COVERING_LETTER',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'DISCLOSURE_LETTER',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'EMAIL',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'HOUSING',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'ID',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
       {
         actionTodo: 'PHONE',
-        numberOfPrisoners: 0,
+        numberOfPrisonersOver12Weeks: 0,
+        numberOfPrisonersWithin12Weeks: 0,
       },
     ])
   })

@@ -59,19 +59,23 @@ describe('getWorkStatusProgress', () => {
       statusCounts: [
         {
           profileStatus: 'NO_RIGHT_TO_WORK',
-          numberOfPrisoners: 0,
+          numberOfPrisonersOver12Weeks: 0,
+          numberOfPrisonersWithin12Weeks: 0,
         },
         {
           profileStatus: 'SUPPORT_DECLINED',
-          numberOfPrisoners: 0,
+          numberOfPrisonersOver12Weeks: 0,
+          numberOfPrisonersWithin12Weeks: 0,
         },
         {
           profileStatus: 'SUPPORT_NEEDED',
-          numberOfPrisoners: 0,
+          numberOfPrisonersOver12Weeks: 0,
+          numberOfPrisonersWithin12Weeks: 0,
         },
         {
           profileStatus: 'READY_TO_WORK',
-          numberOfPrisoners: 0,
+          numberOfPrisonersOver12Weeks: 0,
+          numberOfPrisonersWithin12Weeks: 0,
         },
       ],
     })
