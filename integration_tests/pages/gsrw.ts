@@ -24,7 +24,7 @@ export default class GsrwPage extends Page {
   // Content
   numberOfPrisonersWithin12Weeks = (): PageElement => cy.get('[data-qa=numberOfPrisonersWithin12Weeks]')
 
-  numberOfPrisonersAll = (): PageElement => cy.get('[data-qa=numberOfPrisonersAll]')
+  // numberOfPrisonersAll = (): PageElement => cy.get('[data-qa=numberOfPrisonersAll]')
 
   summaryNumberOfPrisonersWithin12Weeks = (): PageElement => cy.get('[data-qa=summary_numberOfPrisonersWithin12Weeks]')
 

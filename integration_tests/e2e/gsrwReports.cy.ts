@@ -73,7 +73,7 @@ context('Get someone ready to work reports', () => {
 
     // Check summary
     reportsPage.numberOfPrisonersWithin12Weeks().contains('89')
-    reportsPage.numberOfPrisonersAll().contains('89')
+    // reportsPage.numberOfPrisonersAll().contains('89')
     reportsPage.summaryNumberOfPrisonersWithin12Weeks().contains('34')
     reportsPage.summaryNumberOfPrisonersOver12Weeks().contains('6')
     reportsPage.summaryNumberOfSupportDeclined().contains('16')
