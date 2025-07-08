@@ -26,5 +26,9 @@ generic-service:
     SYSTEM_PHASE: DEV
     AUDIT_ENABLED: "false"
 
+  scheduledDowntime:
+    enabled: true
+
 generic-prometheus-alerts:
+  businessHoursOnly: true
   alertSeverity: education-alerts-non-prod
