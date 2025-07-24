@@ -8,7 +8,7 @@ generic-service:
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-jobs-board-reporting-ui
+    repository: ghcr.io/ministryofjustice/hmpps-jobs-board-reporting-ui
     tag: app_version # override at deployment time
     port: 3000
 
@@ -31,7 +31,6 @@ generic-service:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "true"
     TOKEN_VERIFICATION_ENABLED: "true"
-    APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY);IngestionEndpoint=https://northeurope-0.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/"
     AUDIT_SQS_REGION: "eu-west-2"
     AUDIT_SERVICE_NAME: "UNASSIGNED" # Your audit service name
 
@@ -42,7 +41,6 @@ generic-service:
 
   namespace_secrets:
     hmpps-jobs-board-reporting-ui:
-      APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
       API_CLIENT_ID: "API_CLIENT_ID"
       API_CLIENT_SECRET: "API_CLIENT_SECRET"
       SYSTEM_CLIENT_ID: "SYSTEM_CLIENT_ID"
@@ -54,6 +52,8 @@ generic-service:
     #sqs-hmpps-audit-secret:
     #  AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
     #  AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
+    hmpps-jobs-board-reporting-ui-application-insights:
+      APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
 
   allowlist:
     groups:
