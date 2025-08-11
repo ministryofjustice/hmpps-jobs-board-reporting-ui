@@ -1,6 +1,5 @@
 import type { RequestHandler } from 'express'
 
-// import JobService from '../../services/jobService'
 import { addWeeks, format, parse } from 'date-fns'
 import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
@@ -11,6 +10,7 @@ import getGsrwSummary from './utils/getGsrwSummary'
 import getWorkStatusProgress from './utils/getWorkStatusProgress'
 import getSupportNeededDocuments from './utils/getSupportNeededDocuments'
 import getSupportToWorkDeclinedReasons from './utils/getSupportToWorkDeclinedReasons'
+import { getSessionData } from '../../utils'
 
 const getGsrwDashboardResolver =
   (prisonerSearchService: PrisonerSearchService, workProfileService: WorkProfileService): RequestHandler =>
@@ -20,11 +20,25 @@ const getGsrwDashboardResolver =
     const { userActiveCaseLoad } = res.locals
 
     try {
+      // Check if date range was stored in session object
+      const sessionData = getSessionData(req, ['mjmaReporting', 'data']) as {
+        dateFrom?: string
+        dateTo?: string
+      }
+
+      // Use query values if provided, otherwise fall back to session
+      const dateFromParam = typeof dateFrom === 'string' && dateFrom.trim() !== '' ? dateFrom : sessionData?.dateFrom
+      const dateToParam = typeof dateTo === 'string' && dateTo.trim() !== '' ? dateTo : sessionData?.dateTo
+
       // parse date params
       const dateFromDt =
-        dateFrom && dateTo ? parse(dateFrom, 'dd/MM/yyyy', new Date()) : getLastFullMonthStartDate(new Date())
+        dateFromParam && dateToParam
+          ? parse(dateFromParam, 'dd/MM/yyyy', new Date())
+          : getLastFullMonthStartDate(new Date())
       const dateToDt =
-        dateFrom && dateTo ? parse(dateTo, 'dd/MM/yyyy', new Date()) : getLastFullMonthEndDate(new Date())
+        dateFromParam && dateToParam
+          ? parse(dateToParam, 'dd/MM/yyyy', new Date())
+          : getLastFullMonthEndDate(new Date())
 
       // Calculate and format date params
       const latestReleaseDate = format(addWeeks(dateToDt, 12), 'yyyy-MM-dd')

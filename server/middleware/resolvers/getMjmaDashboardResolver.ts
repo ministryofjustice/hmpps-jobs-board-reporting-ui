@@ -9,6 +9,7 @@ import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 import getMjmaSummary from './utils/getMjmaSummary'
 import getTotalApplicationsByStage from './utils/getTotalApplicationsByStage'
 import getLatestApplicationsByStage from './utils/getLatestApplicationsByStage'
+import { getSessionData } from '../../utils'
 
 const getMjmaDashboardResolver =
   (jobService: JobService): RequestHandler =>
@@ -21,9 +22,21 @@ const getMjmaDashboardResolver =
       // format date params
       let dateFromParam
       let dateToParam
-      if (dateFrom && dateTo) {
-        dateFromParam = format(parse(dateFrom, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd')
-        dateToParam = format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd')
+
+      // Check if date range was stored in session object
+      const sessionData = getSessionData(req, ['gsrwReporting', 'data']) as {
+        dateFrom?: string
+        dateTo?: string
+      }
+
+      // Use query values if provided, otherwise fall back to session
+      dateFromParam = typeof dateFrom === 'string' && dateFrom.trim() !== '' ? dateFrom : sessionData?.dateFrom
+
+      dateToParam = typeof dateTo === 'string' && dateTo.trim() !== '' ? dateTo : sessionData?.dateTo
+
+      if (dateFromParam && dateToParam) {
+        dateFromParam = format(parse(dateFromParam, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd')
+        dateToParam = format(parse(dateToParam, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd')
       } else {
         dateFromParam = format(getLastFullMonthStartDate(new Date()), 'yyyy-MM-dd')
         dateToParam = format(getLastFullMonthEndDate(new Date()), 'yyyy-MM-dd')

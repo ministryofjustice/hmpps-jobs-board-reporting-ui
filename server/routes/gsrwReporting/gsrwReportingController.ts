@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { format, parse } from 'date-fns'
-import { getSessionData, setSessionData, validateFormSchema } from '../../utils'
+import { deleteSessionData, getSessionData, setSessionData, validateFormSchema } from '../../utils'
 import validationSchema from './validationSchema'
 import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
@@ -52,14 +52,25 @@ export default class GsrwReportingController {
     )
 
     try {
+      // Persist date range from the mjma tab if necessary
+      const sessionData = getSessionData(req, ['mjmaReporting', 'data']) as {
+        dateFrom?: string
+        dateTo?: string
+      }
+
+      // Use query values if provided, otherwise fall back to session stored in the previous tab
+      const filterDateFrom = typeof dateFrom === 'string' && dateFrom.trim() !== '' ? dateFrom : sessionData?.dateFrom
+
+      const filterDateTo = typeof dateTo === 'string' && dateTo.trim() !== '' ? dateTo : sessionData?.dateTo
+
       const data = {
-        dateFrom,
-        dateTo,
-        dateFromDisplay: dateFrom
-          ? format(parse(dateFrom, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
+        dateFrom: filterDateFrom,
+        dateTo: filterDateTo,
+        dateFromDisplay: filterDateFrom
+          ? format(parse(filterDateFrom, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthStartDate(new Date()), 'd MMMM yyyy'),
-        dateToDisplay: dateTo
-          ? format(parse(dateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
+        dateToDisplay: filterDateTo
+          ? format(parse(filterDateTo, 'dd/MM/yyyy', new Date()), 'd MMMM yyyy')
           : format(getLastFullMonthEndDate(new Date()), 'd MMMM yyyy'),
         numberOfPrisonersAll,
         numberOfPrisonersWithin12Weeks,
@@ -105,6 +116,10 @@ export default class GsrwReportingController {
         return
       }
 
+      // New query, refresh previous (if any) mjma cache
+      if (req.session.data.mjmaReporting_data) {
+        deleteSessionData(req, ['mjmaReporting', 'data'])
+      }
       const uri = [dateTo && `dateTo=${dateTo}`, dateFrom && `dateFrom=${dateFrom}`].filter(val => !!val)
 
       res.redirect(uri.length ? `/gsrw?${uri.join('&')}` : '/gsrw')
