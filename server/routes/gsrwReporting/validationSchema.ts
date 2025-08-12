@@ -29,6 +29,7 @@ export default function validationSchema(): ObjectSchema {
       // Check if both dates are valid
       const dateFromObj = parse(dateFrom.toString(), 'dd/MM/yyyy', new Date())
       const dateToObj = parse(dateTo.toString(), 'dd/MM/yyyy', new Date())
+      const now = new Date()
 
       if (Number.isNaN(dateFromObj.getTime())) {
         return helper.error('date.base', {
@@ -44,9 +45,24 @@ export default function validationSchema(): ObjectSchema {
         })
       }
 
+      // Check that no future dates are allowed
+      if (dateFromObj > now) {
+        return helper.error('date.future', {
+          key: 'dateFrom',
+          label: 'dateFrom',
+        })
+      }
+
       // Check if dateTo is after dateFrom
-      if (dateToObj <= dateFromObj) {
+      if (dateToObj < dateFromObj) {
         return helper.error('date.order', {
+          key: 'dateTo',
+          label: 'dateTo',
+        })
+      }
+
+      if (dateToObj > now) {
+        return helper.error('date.future', {
           key: 'dateTo',
           label: 'dateTo',
         })
@@ -59,5 +75,6 @@ export default function validationSchema(): ObjectSchema {
       'any.dateFromRequired': 'Enter or select a `earliest` date',
       'date.base': 'Enter the date in the correct format',
       'date.order': "The `latest` date must be after the 'earliest' date",
+      'date.future': 'Dates must not be in the future',
     })
 }

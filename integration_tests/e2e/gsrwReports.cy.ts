@@ -61,6 +61,12 @@ context('Get someone ready to work reports', () => {
     reportsPage.dateToPageErrorMessage().contains("The `latest` date must be after the 'earliest' date")
 
     reportsPage.dateFrom().clear().type('1/11/2024')
+    reportsPage.dateTo().clear().type('31/12/2099')
+
+    reportsPage.submitButton().click()
+    reportsPage.dateToPageErrorMessage().contains('Dates must not be in the future')
+
+    reportsPage.dateFrom().clear().type('1/11/2024')
     reportsPage.dateTo().clear().type('30/11/2024')
 
     reportsPage.submitButton().click()
