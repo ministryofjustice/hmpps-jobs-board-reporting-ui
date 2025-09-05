@@ -18,7 +18,7 @@ export default class PrisonerSearchApiClient {
 
   async getPrisonersByReleaseDateCount(earliestReleaseDate: string, latestReleaseDate: string, prisonIds: string[]) {
     const results = await this.restClient.post<PagedResponse<unknown>>({
-      path: `${PRISONER_SEARCH_BY_RELEASE_DATE}?page=0&size=99999`,
+      path: `${PRISONER_SEARCH_BY_RELEASE_DATE}?page=0&size=9999`,
       data: {
         earliestReleaseDate,
         latestReleaseDate,
