@@ -4,7 +4,7 @@ const getPrisonersByReleaseDate = () =>
   stubFor({
     request: {
       method: 'POST',
-      url: '/prisoner-search/release-date-by-prison?page=0&size=99999',
+      url: '/prisoner-search/release-date-by-prison?page=0&size=9999',
     },
     response: {
       status: 200,
