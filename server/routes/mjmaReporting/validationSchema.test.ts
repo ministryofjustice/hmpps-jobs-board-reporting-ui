@@ -42,8 +42,8 @@ describe('validationSchema', () => {
 
   it('On validation success - should allow valid dateFrom and dateTo', () => {
     req.body = {
-      dateFrom: '15/03/2024',
-      dateTo: '16/03/2024',
+      dateFrom: '15/08/2025',
+      dateTo: '16/08/2025',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -53,8 +53,8 @@ describe('validationSchema', () => {
 
   it('On validation error - should disallow dateTo being before dateFrom', () => {
     req.body = {
-      dateFrom: '15/03/2024',
-      dateTo: '14/03/2024',
+      dateFrom: '15/08/2025',
+      dateTo: '14/08/2025',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -91,7 +91,7 @@ describe('validationSchema', () => {
     const futureDate = '31/12/2099'
     req.body = {
       dateFrom: futureDate,
-      dateTo: '01/01/2025',
+      dateTo: '01/09/2025',
     }
 
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
@@ -103,7 +103,7 @@ describe('validationSchema', () => {
   it('On validation error - should disallow a future dateTo', () => {
     const futureDate = '31/12/2099'
     req.body = {
-      dateFrom: '01/01/2025',
+      dateFrom: '01/09/2025',
       dateTo: futureDate,
     }
 
@@ -114,7 +114,7 @@ describe('validationSchema', () => {
   })
 
   it('Should allow dateFrom and dateTo as today’s date', () => {
-    const today = '01/01/2025'
+    const today = new Date().toLocaleDateString('en-GB').padStart(10, '0')
 
     req.body = {
       dateFrom: today,
@@ -136,5 +136,31 @@ describe('validationSchema', () => {
 
     expect(error).toBeTruthy()
     expect(error.details.map(d => d.message)).toContain('Dates must not be in the future')
+  })
+
+  it('On validation error - should disallow a dateFrom before 1st August 2025', () => {
+    const pastDate = '31/12/2024'
+    req.body = {
+      dateFrom: pastDate,
+      dateTo: '01/09/2025',
+    }
+
+    const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
+
+    expect(error).toBeTruthy()
+    expect(error.details[0].message).toBe('Dates must be on or after 1 August 2025')
+  })
+
+  it('On validation error - should disallow a dateTo before 1st August 2025', () => {
+    const pastDate = '31/12/2024'
+    req.body = {
+      dateFrom: '01/09/2025',
+      dateTo: pastDate,
+    }
+
+    const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true })
+
+    expect(error).toBeTruthy()
+    expect(error.details[0].message).toBe('Dates must be on or after 1 August 2025')
   })
 })
