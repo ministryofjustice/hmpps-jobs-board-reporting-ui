@@ -61,14 +61,14 @@ export default function validationSchema(): ObjectSchema {
       }
 
       // Check dates are on or after 1 August 2025
-      if (dateFromObj < new Date('2025-08-01')) {
+      if (dateFromObj <= new Date('2025-07-31')) {
         return helper.error('date.past', {
           key: 'dateFrom',
           label: 'dateFrom',
         })
       }
 
-      if (dateToObj < new Date('2025-08-01')) {
+      if (dateToObj <= new Date('2025-07-31')) {
         return helper.error('date.past', {
           key: 'dateTo',
           label: 'dateTo',
