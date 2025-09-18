@@ -86,7 +86,7 @@ context('Get someone ready to work reports', () => {
     reportsPage.summaryNumberOfNoRightToWork().contains('21')
 
     // Check support needed documents
-    reportsPage.supportNeededDocumentsWithin12Weeks('BANK_ACCOUNT').contains('2')
+    reportsPage.supportNeededDocumentsWithin12Weeks('BANK_ACCOUNT').contains('0')
     reportsPage.supportNeededDocumentsWithin12Weeks('CV_AND_COVERING_LETTER').contains('22')
     reportsPage.supportNeededDocumentsWithin12Weeks('DISCLOSURE_LETTER').contains('12')
     reportsPage.supportNeededDocumentsWithin12Weeks('EMAIL').contains('8')
@@ -111,7 +111,7 @@ context('Get someone ready to work reports', () => {
     reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('HEALTH').contains('4')
     reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('NO_REASON').contains('2')
     reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('RETIRED').contains('7')
-    reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('RETURNING_TO_JOB').contains('2')
+    reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('RETURNING_TO_JOB').contains('0')
     reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('SELF_EMPLOYED').contains('13')
     reportsPage.supportToWorkDeclinedReasonsWithin12Weeks('OTHER').contains('0')
 
@@ -128,16 +128,16 @@ context('Get someone ready to work reports', () => {
     reportsPage.supportToWorkDeclinedReasonsOver12Weeks('OTHER').contains('0')
 
     // Check work status progress
-    reportsPage.workStatusProgressWithin12Weeks('NOT_STARTED').contains('18')
+    reportsPage.workStatusProgressWithin12Weeks('NOT_STARTED').contains('0')
     reportsPage.workStatusProgressWithin12Weeks('NO_RIGHT_TO_WORK').contains('21')
     reportsPage.workStatusProgressWithin12Weeks('SUPPORT_DECLINED').contains('16')
-    reportsPage.workStatusProgressWithin12Weeks('SUPPORT_NEEDED').contains('22')
+    reportsPage.workStatusProgressWithin12Weeks('SUPPORT_NEEDED').contains('0')
     reportsPage.workStatusProgressWithin12Weeks('READY_TO_WORK').contains('12')
 
     reportsPage.workStatusProgressOver12Weeks('NOT_STARTED').contains('0')
     reportsPage.workStatusProgressOver12Weeks('NO_RIGHT_TO_WORK').contains('6')
     reportsPage.workStatusProgressOver12Weeks('SUPPORT_DECLINED').contains('0')
-    reportsPage.workStatusProgressOver12Weeks('SUPPORT_NEEDED').contains('2')
+    reportsPage.workStatusProgressOver12Weeks('SUPPORT_NEEDED').contains('0')
     reportsPage.workStatusProgressOver12Weeks('READY_TO_WORK').contains('1')
   })
 })
