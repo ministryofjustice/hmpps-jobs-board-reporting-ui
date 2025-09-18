@@ -47,7 +47,6 @@ describe('MjmaReportingController', () => {
 
       await controller.get(req, res, next)
 
-      expect(sortByArray).toHaveBeenCalledTimes(2)
       expect(setSessionData).toHaveBeenCalledWith(req, ['mjmaReporting', 'data'], expect.any(Object))
       expect(res.render).toHaveBeenCalledWith(
         'pages/mjmaReporting/index',

@@ -41,11 +41,6 @@ const getWorkStatusProgress = () =>
             numberOfPrisonersOver12Weeks: 0,
           },
           {
-            profileStatus: 'SUPPORT_NEEDED',
-            numberOfPrisonersWithin12Weeks: 22,
-            numberOfPrisonersOver12Weeks: 2,
-          },
-          {
             profileStatus: 'READY_TO_WORK',
             numberOfPrisonersWithin12Weeks: 12,
             numberOfPrisonersOver12Weeks: 1,
@@ -65,11 +60,6 @@ const getSupportNeededDocuments = () =>
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: [
-        {
-          actionTodo: 'BANK_ACCOUNT',
-          numberOfPrisonersWithin12Weeks: 2,
-          numberOfPrisonersOver12Weeks: 0,
-        },
         {
           actionTodo: 'CV_AND_COVERING_LETTER',
           numberOfPrisonersWithin12Weeks: 22,
@@ -152,11 +142,6 @@ const getSupportToWorkDeclinedReasons = () =>
         {
           supportToWorkDeclinedReason: 'RETIRED',
           numberOfPrisonersWithin12Weeks: 7,
-          numberOfPrisonersOver12Weeks: 0,
-        },
-        {
-          supportToWorkDeclinedReason: 'RETURNING_TO_JOB',
-          numberOfPrisonersWithin12Weeks: 2,
           numberOfPrisonersOver12Weeks: 0,
         },
         {

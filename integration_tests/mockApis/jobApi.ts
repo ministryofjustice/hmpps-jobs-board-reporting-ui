@@ -42,11 +42,6 @@ const getTotalApplicationsByStage = () =>
           applicationStatus: 'SELECTED_FOR_INTERVIEW',
           numberOfApplications: 10,
         },
-
-        {
-          applicationStatus: 'UNSUCCESSFUL_AT_INTERVIEW',
-          numberOfApplications: 0,
-        },
         {
           applicationStatus: 'JOB_OFFER',
           numberOfApplications: 4,
@@ -74,16 +69,8 @@ const getLatestApplicationsByStage = () =>
           numberOfApplications: 10,
         },
         {
-          applicationStatus: 'SELECTED_FOR_INTERVIEW',
-          numberOfApplications: 0,
-        },
-        {
           applicationStatus: 'INTERVIEW_BOOKED',
           numberOfApplications: 6,
-        },
-        {
-          applicationStatus: 'UNSUCCESSFUL_AT_INTERVIEW',
-          numberOfApplications: 0,
         },
         {
           applicationStatus: 'JOB_OFFER',

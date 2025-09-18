@@ -7,7 +7,6 @@ import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
 import ApplicationsByStageResult from '../../data/jobApi/interfaces/applicationsByStageResult'
 import contentLookup from '../../constants/contentLookup'
-import sortByArray from '../../utils/sortByArray'
 import applicationOrder from '../../constants/applicationOrder'
 
 export default class MjmaReportingController {
@@ -16,17 +15,21 @@ export default class MjmaReportingController {
     const { summary, totalApplicationsByStage, latestApplicationsByStage } = req.context
 
     try {
-      const totalApplicationsByStageSorted = sortByArray({
-        source: totalApplicationsByStage,
-        by: applicationOrder,
-        sourceTransformer: (item: { applicationStatus: string }) => item.applicationStatus,
-      })
+      const totalApplicationsByStageSorted: ApplicationsByStageResult[] = applicationOrder.map(
+        status =>
+          totalApplicationsByStage.find((item: ApplicationsByStageResult) => item.applicationStatus === status) ?? {
+            applicationStatus: status,
+            numberOfApplications: 0,
+          },
+      )
 
-      const latestApplicationsByStageeSorted = sortByArray({
-        source: latestApplicationsByStage,
-        by: applicationOrder,
-        sourceTransformer: (item: { applicationStatus: string }) => item.applicationStatus,
-      })
+      const latestApplicationsByStageSorted: ApplicationsByStageResult[] = applicationOrder.map(
+        status =>
+          latestApplicationsByStage.find((item: ApplicationsByStageResult) => item.applicationStatus === status) ?? {
+            applicationStatus: status,
+            numberOfApplications: 0,
+          },
+      )
 
       // Persist date range from the gsrw tab if necessary
       const sessionData = getSessionData(req, ['gsrwReporting', 'data']) as {
@@ -53,7 +56,7 @@ export default class MjmaReportingController {
           applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
           numberOfApplications: entry.numberOfApplications,
         })),
-        latestApplicationsByStage: latestApplicationsByStageeSorted.map((entry: ApplicationsByStageResult) => ({
+        latestApplicationsByStage: latestApplicationsByStageSorted.map((entry: ApplicationsByStageResult) => ({
           applicationStatus: contentLookup.applicationStatus[entry.applicationStatus],
           numberOfApplications: entry.numberOfApplications,
         })),
