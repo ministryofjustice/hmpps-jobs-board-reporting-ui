@@ -31,47 +31,53 @@ context('Get someone ready to work reports', () => {
   it('Reports - filters - validation messages', () => {
     const reportsPage = Page.verifyOnPage(GsrwPage)
 
-    reportsPage.dateFrom().type('1/11/2024')
+    reportsPage.dateFrom().type('1/09/2025')
 
     reportsPage.submitButton().click()
     reportsPage.dateToPageErrorMessage().contains('Enter or select a `latest` date')
 
     reportsPage.dateFrom().clear()
-    reportsPage.dateTo().type('1/11/2024')
+    reportsPage.dateTo().type('1/09/2025')
 
     reportsPage.submitButton().click()
     reportsPage.dateFromPageErrorMessage().contains('Enter or select a `earliest` date')
 
     reportsPage.dateFrom().clear().type('asdasdsad')
-    reportsPage.dateTo().clear().type('1/11/2024')
+    reportsPage.dateTo().clear().type('3/09/2025')
 
     reportsPage.submitButton().click()
     reportsPage.dateFromPageErrorMessage().contains('Enter the date in the correct format')
 
-    reportsPage.dateFrom().clear().type('1/11/2024')
+    reportsPage.dateFrom().clear().type('2/09/2025')
     reportsPage.dateTo().clear().type('asdasdsad')
 
     reportsPage.submitButton().click()
     reportsPage.dateToPageErrorMessage().contains('Enter the date in the correct format')
 
-    reportsPage.dateFrom().clear().type('30/11/2024')
-    reportsPage.dateTo().clear().type('1/11/2024')
+    reportsPage.dateFrom().clear().type('30/08/2025')
+    reportsPage.dateTo().clear().type('1/08/2025')
 
     reportsPage.submitButton().click()
     reportsPage.dateToPageErrorMessage().contains("The `latest` date must be after the 'earliest' date")
 
-    reportsPage.dateFrom().clear().type('1/11/2024')
+    reportsPage.dateFrom().clear().type('1/09/2025')
     reportsPage.dateTo().clear().type('31/12/2099')
 
     reportsPage.submitButton().click()
     reportsPage.dateToPageErrorMessage().contains('Dates must not be in the future')
 
-    reportsPage.dateFrom().clear().type('1/11/2024')
-    reportsPage.dateTo().clear().type('30/11/2024')
+    reportsPage.dateFrom().clear().type('31/07/2025')
+    reportsPage.dateTo().clear().type('31/08/2025')
+
+    reportsPage.submitButton().click()
+    reportsPage.dateFromPageErrorMessage().contains('Dates must be on or after 1 August 2025')
+
+    reportsPage.dateFrom().clear().type('1/08/2025')
+    reportsPage.dateTo().clear().type('30/08/2025')
 
     reportsPage.submitButton().click()
 
-    reportsPage.dateDisplay().contains('Report period: 1 November 2024 to 30 November 2024')
+    reportsPage.dateDisplay().contains('Report period: 1 August 2025 to 30 August 2025')
   })
 
   it('Reports - Check content', () => {

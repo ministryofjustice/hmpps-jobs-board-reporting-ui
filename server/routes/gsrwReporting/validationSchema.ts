@@ -53,16 +53,31 @@ export default function validationSchema(): ObjectSchema {
         })
       }
 
-      // Check if dateTo is after dateFrom
-      if (dateToObj < dateFromObj) {
-        return helper.error('date.order', {
+      if (dateToObj > now) {
+        return helper.error('date.future', {
           key: 'dateTo',
           label: 'dateTo',
         })
       }
 
-      if (dateToObj > now) {
-        return helper.error('date.future', {
+      // Check dates are on or after 1 August 2025
+      if (dateFromObj <= new Date('2025-07-31')) {
+        return helper.error('date.past', {
+          key: 'dateFrom',
+          label: 'dateFrom',
+        })
+      }
+
+      if (dateToObj <= new Date('2025-07-31')) {
+        return helper.error('date.past', {
+          key: 'dateTo',
+          label: 'dateTo',
+        })
+      }
+
+      // Check if dateTo is after dateFrom
+      if (dateToObj < dateFromObj) {
+        return helper.error('date.order', {
           key: 'dateTo',
           label: 'dateTo',
         })
@@ -76,5 +91,6 @@ export default function validationSchema(): ObjectSchema {
       'date.base': 'Enter the date in the correct format',
       'date.order': "The `latest` date must be after the 'earliest' date",
       'date.future': 'Dates must not be in the future',
+      'date.past': 'Dates must be on or after 1 August 2025',
     })
 }
