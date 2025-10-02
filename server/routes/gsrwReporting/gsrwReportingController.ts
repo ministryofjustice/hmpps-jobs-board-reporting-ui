@@ -5,7 +5,6 @@ import validationSchema from './validationSchema'
 import logger from '../../../logger'
 import getLastFullMonthStartDate from '../../utils/getLastFullMonthStartDate'
 import getLastFullMonthEndDate from '../../utils/getLastFullMonthEndDate'
-import sortByArray from '../../utils/sortByArray'
 import workStatusProgressOrder from '../../constants/workStatusProgressOrder'
 import supportNeededDocumentsOrder from '../../constants/supportNeededDocumentsOrder'
 import supportToWorkDeclinedReasonsOrder from '../../constants/supportToWorkDeclinedReasonOrder'
@@ -19,27 +18,38 @@ export default class GsrwReportingController {
       numberOfPrisonersOver12Weeks = 0,
       summary,
       workStatusProgress,
-      supportNeededDocuments,
-      supportToWorkDeclinedReasons,
+      supportNeededDocuments = [],
+      supportToWorkDeclinedReasons = [],
     } = req.context
 
-    const workStatusProgressSorted = sortByArray({
-      source: workStatusProgress?.statusCounts,
-      by: workStatusProgressOrder,
-      sourceTransformer: (item: { profileStatus: string }) => item.profileStatus,
-    })
+    const workStatusProgressSorted = workStatusProgressOrder.map(
+      status =>
+        workStatusProgress?.statusCounts.find((item: { profileStatus: string }) => item.profileStatus === status) ?? {
+          profileStatus: status,
+          numberOfPrisonersWithin12Weeks: 0,
+          numberOfPrisonersOver12Weeks: 0,
+        },
+    )
 
-    const supportNeededDocumentsSorted = sortByArray({
-      source: supportNeededDocuments,
-      by: supportNeededDocumentsOrder,
-      sourceTransformer: (item: { actionTodo: string }) => item.actionTodo,
-    })
+    const supportNeededDocumentsSorted = supportNeededDocumentsOrder.map(
+      action =>
+        supportNeededDocuments.find((item: { actionTodo: string }) => item.actionTodo === action) ?? {
+          actionTodo: action,
+          numberOfPrisonersWithin12Weeks: 0,
+          numberOfPrisonersOver12Weeks: 0,
+        },
+    )
 
-    const supportToWorkDeclinedReasonsSorted = sortByArray({
-      source: supportToWorkDeclinedReasons,
-      by: supportToWorkDeclinedReasonsOrder,
-      sourceTransformer: (item: { supportToWorkDeclinedReason: string }) => item.supportToWorkDeclinedReason,
-    })
+    const supportToWorkDeclinedReasonsSorted = supportToWorkDeclinedReasonsOrder.map(
+      reason =>
+        supportToWorkDeclinedReasons.find(
+          (item: { supportToWorkDeclinedReason: string }) => item.supportToWorkDeclinedReason === reason,
+        ) ?? {
+          supportToWorkDeclinedReason: reason,
+          numberOfPrisonersWithin12Weeks: 0,
+          numberOfPrisonersOver12Weeks: 0,
+        },
+    )
 
     const statusCountWithin12Weeks = workStatusProgress?.statusCounts?.reduce(
       (sum: number, status: { numberOfPrisonersWithin12Weeks: number }) => sum + status.numberOfPrisonersWithin12Weeks,
