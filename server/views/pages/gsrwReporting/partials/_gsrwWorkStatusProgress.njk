@@ -27,17 +27,6 @@
           More than 12 weeks from release
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Not started
-        </dt>
-        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisonersWithin12Weeks">
-          {{ notStartedCountWithin12Weeks }}
-        </dd>
-        <dd class="govuk-summary-list__value" data-qa="workStatusProgress_NOT_STARTED_numberOfPrisonersOver12Weeks">
-          {{ notStartedCountOver12Weeks }}
-        </dd>
-      </div>
       {% for entry in workStatusProgress %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">

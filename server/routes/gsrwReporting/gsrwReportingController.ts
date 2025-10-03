@@ -51,16 +51,6 @@ export default class GsrwReportingController {
         },
     )
 
-    const statusCountWithin12Weeks = workStatusProgress?.statusCounts?.reduce(
-      (sum: number, status: { numberOfPrisonersWithin12Weeks: number }) => sum + status.numberOfPrisonersWithin12Weeks,
-      0,
-    )
-
-    const statusCountOver12Weeks = workStatusProgress?.statusCounts?.reduce(
-      (sum: number, status: { numberOfPrisonersOver12Weeks: number }) => sum + status.numberOfPrisonersOver12Weeks,
-      0,
-    )
-
     try {
       // Persist date range from the mjma tab if necessary
       const sessionData = getSessionData(req, ['mjmaReporting', 'data']) as {
@@ -87,14 +77,6 @@ export default class GsrwReportingController {
         numberOfPrisonersOver12Weeks,
         summary,
         numberOfPrisonersStatusChange: workStatusProgress?.numberOfPrisonersStatusChange,
-        notStartedCountWithin12Weeks:
-          numberOfPrisonersWithin12Weeks - statusCountWithin12Weeks < 0
-            ? 0
-            : numberOfPrisonersWithin12Weeks - statusCountWithin12Weeks,
-        notStartedCountOver12Weeks:
-          numberOfPrisonersOver12Weeks - statusCountOver12Weeks < 0
-            ? 0
-            : numberOfPrisonersOver12Weeks - statusCountOver12Weeks,
         workStatusProgress: workStatusProgressSorted,
         supportNeededDocuments: supportNeededDocumentsSorted,
         supportToWorkDeclinedReasons: supportToWorkDeclinedReasonsSorted,
