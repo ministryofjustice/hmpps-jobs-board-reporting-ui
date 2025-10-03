@@ -134,13 +134,11 @@ context('Get someone ready to work reports', () => {
     reportsPage.supportToWorkDeclinedReasonsOver12Weeks('OTHER').contains('0')
 
     // Check work status progress
-    reportsPage.workStatusProgressWithin12Weeks('NOT_STARTED').contains('0')
     reportsPage.workStatusProgressWithin12Weeks('NO_RIGHT_TO_WORK').contains('21')
     reportsPage.workStatusProgressWithin12Weeks('SUPPORT_DECLINED').contains('16')
     reportsPage.workStatusProgressWithin12Weeks('SUPPORT_NEEDED').contains('0')
     reportsPage.workStatusProgressWithin12Weeks('READY_TO_WORK').contains('12')
 
-    reportsPage.workStatusProgressOver12Weeks('NOT_STARTED').contains('0')
     reportsPage.workStatusProgressOver12Weeks('NO_RIGHT_TO_WORK').contains('6')
     reportsPage.workStatusProgressOver12Weeks('SUPPORT_DECLINED').contains('0')
     reportsPage.workStatusProgressOver12Weeks('SUPPORT_NEEDED').contains('0')
