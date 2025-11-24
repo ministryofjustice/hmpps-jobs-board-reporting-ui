@@ -15,11 +15,11 @@ export default class MjmaPage extends Page {
 
   dateFrom = (): PageElement => cy.get('#dateFrom')
 
-  dateFromPageErrorMessage = (): PageElement => cy.get('[href="#dateFrom"]')
-
   dateTo = (): PageElement => cy.get('#dateTo')
 
-  dateToPageErrorMessage = (): PageElement => cy.get('[href="#dateTo"]')
+  datesPageErrorMessage = (): PageElement => cy.get('[href="#dates"]')
+
+  datesComponentErrorMessage = (): PageElement => cy.get('#date-error')
 
   dateDisplay = (): PageElement => cy.get('[data-qa=date-display]')
 
