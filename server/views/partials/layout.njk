@@ -12,7 +12,7 @@
   {% endfor %}
 {% endblock %}
 
-{% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+{% block pageTitle %}{{ 'Error: ' if errors else '' }}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
   {{ feComponents.header | safe }}
