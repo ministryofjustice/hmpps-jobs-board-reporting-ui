@@ -21,7 +21,8 @@
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open --e2e --browser chrome",
     "clean": "rm -rf dist node_modules",
-    "rebuild": "npm run clean && npm i && npm run build"
+    "rebuild": "npm run clean && npm run setup && npm run build",
+    "setup": "npm ci && hmpps-npm-script-run-allowlist"
   },
   "engines": {
     "node": "^20",
@@ -101,6 +102,7 @@
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "nocache": "^4.0.0",
+    "npm": "11.6.4",
     "nunjucks": "^3.2.4",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
@@ -113,6 +115,7 @@
   },
   "devDependencies": {
     "@jgoz/esbuild-plugin-typecheck": "^4.0.1",
+    "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.3",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",
