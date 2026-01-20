@@ -1,6 +1,6 @@
 # hmpps-jobs-board-reporting-ui
-[![repo standards badge](https://img.shields.io/badge/endpoint.svg?&style=flat&logo=github&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-jobs-board-reporting-ui)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-github-repositories.html#hmpps-jobs-board-reporting-ui "Link to report")
-[![CircleCI](https://circleci.com/gh/ministryofjustice/hmpps-jobs-board-reporting-ui/tree/main.svg?style=svg)](https://circleci.com/gh/ministryofjustice/hmpps-jobs-board-reporting-ui)
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/hmpps-jobs-board-reporting-ui/badge)](https://github-community.service.justice.gov.uk/repository-standards/hmpps-jobs-board-reporting-ui)
+[![Pipeline [test -> build -> deploy]](https://github.com/ministryofjustice/hmpps-jobs-board-reporting-ui/actions/workflows/pipeline.yml/badge.svg?branch=main)](https://github.com/ministryofjustice/hmpps-jobs-board-reporting-ui/actions/workflows/pipeline.yml)
 
 Template github repo used for new Typescript based projects.
 
