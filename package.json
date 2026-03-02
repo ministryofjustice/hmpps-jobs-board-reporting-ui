@@ -184,6 +184,9 @@
       "cookie": "0.7.2"
     },
     "diff": "^8.0.3",
+    "mocha": {
+      "serialize-javascript": "^7.0.3"
+    },
     "glob": {
       "minimatch": "^10.2.3"
     },
