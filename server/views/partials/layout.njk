@@ -15,16 +15,19 @@
 {% block pageTitle %}{{ 'Error: ' if errors else '' }}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {{ feComponents.header | safe }}
+    {{ feComponents.header | safe }}
 {% endblock %}
 
 {% block bodyStart %}
 {% endblock %}
 
 {% block footer %}
-  {{ feComponents.footer | safe }}
+    {{ feComponents.footer | safe }}
 {% endblock %}
 
 {% block bodyEnd %}
-  <script type="module" src="{{ '/assets/js/app.js' | assetMap }}"></script>
+    {% for js in feComponents.jsIncludes %}
+        <script src="{{ js }}" nonce="{{ cspNonce }}"></script>
+    {% endfor %}
+    <script type="module" src="{{ '/assets/js/app.js' | assetMap }}"></script>
 {% endblock %}

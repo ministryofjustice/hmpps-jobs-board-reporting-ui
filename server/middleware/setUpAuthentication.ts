@@ -21,7 +21,7 @@ export default function setUpAuth(): Router {
     '/autherror',
     getFrontendComponents({
       logger,
-      componentApiConfig: config.apis.componentApi,
+      componentApiConfig: config.apis.frontendComponents,
       dpsUrl: config.dpsHomeUrl,
     }),
     (req, res) => {

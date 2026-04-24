@@ -51,21 +51,15 @@ export default function createApp(services: Services): express.Application {
   app.use(sanitizeQuery)
 
   // Get front end components for DPS header
-  app.get(
-    '*any',
+  app.use(
+    '/^(?!\\/api).*/',
     getFrontendComponents({
-      componentApiConfig: config.apis.componentApi,
+      componentApiConfig: config.apis.frontendComponents,
       requestOptions: { includeSharedData: true },
       dpsUrl: config.dpsHomeUrl,
       logger,
     }),
   )
-  // app.use(
-  //   getFrontendComponents({
-  //     logger,
-  //     dpsUrl: config.dpsHomeUrl,
-  //   }),
-  // )
 
   app.use(routes(services))
 
