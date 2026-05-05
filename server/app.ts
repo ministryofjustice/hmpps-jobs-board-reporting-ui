@@ -1,6 +1,6 @@
 import express from 'express'
 import createError from 'http-errors'
-import dpsComponents from '@ministryofjustice/hmpps-connect-dps-components'
+import { getFrontendComponents } from '@ministryofjustice/hmpps-connect-dps-components'
 
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
@@ -52,7 +52,10 @@ export default function createApp(services: Services): express.Application {
 
   // Get front end components for DPS header
   app.use(
-    dpsComponents.getPageComponents({
+    /^(?!\/api).*/,
+    getFrontendComponents({
+      componentApiConfig: config.apis.frontendComponents,
+      requestOptions: { includeSharedData: true },
       dpsUrl: config.dpsHomeUrl,
       logger,
     }),
