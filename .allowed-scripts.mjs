@@ -7,6 +7,6 @@ export default configureAllowedScripts({
      "node_modules/esbuild@0.25.8": "ALLOW",
      "node_modules/fsevents@2.3.3": "ALLOW",
      "node_modules/postinstall-postinstall@2.1.0": "ALLOW",
-     "node_modules/protobufjs@7.5.4": "ALLOW"
+     "node_modules/protobufjs@8.4.2": "ALLOW"
    },
 })
