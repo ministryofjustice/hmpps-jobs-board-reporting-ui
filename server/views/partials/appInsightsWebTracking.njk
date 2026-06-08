@@ -11,7 +11,7 @@
     };
     const snippet = {
       config: {
-        connectionString: "{{ appInsightsConnectionString }}",
+        connectionString: {{ appInsightsConnectionString | dump | safe }},
         extensions: [clickPluginInstance],
         extensionConfig: {
           [clickPluginInstance.identifier]: clickPluginConfig
@@ -24,7 +24,7 @@
 
     appInsights.addTelemetryInitializer(function (envelope) {
       envelope.tags["ai.cloud.role"] = "hmpps-jobs-board-reporting-ui";
-      envelope.tags["ai.application.ver"] = "{{ buildNumber }}";
+      envelope.tags["ai.application.ver"] = {{ buildNumber | dump | safe }};
     });
 
     appInsights.trackPageView();

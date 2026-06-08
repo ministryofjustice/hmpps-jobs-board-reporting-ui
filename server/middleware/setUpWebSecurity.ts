@@ -3,7 +3,7 @@ import express, { Router, Request, Response, NextFunction } from 'express'
 import helmet from 'helmet'
 import config from '../config'
 
-const azureDomains = ['https://northeurope-0.in.applicationinsights.azure.com', '*.monitor.azure.com']
+const azureDomains = ['https://northeurope-0.in.applicationinsights.azure.com', 'https://js.monitor.azure.com']
 
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
@@ -33,7 +33,6 @@ export default function setUpWebSecurity(): Router {
           scriptSrc: [
             "'self'",
             config.apis.frontendComponents.url,
-            ...azureDomains,
             (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`,
           ],
           styleSrc: [
