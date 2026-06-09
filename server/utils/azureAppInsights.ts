@@ -8,7 +8,7 @@ import {
 import { RequestHandler } from 'express'
 import type { ApplicationInfo } from '../applicationInfo'
 
-export function initialiseAppInsights(): void {
+function initialiseAppInsights(): void {
   if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
     // eslint-disable-next-line no-console
     console.log('Enabling azure application insights')
@@ -16,6 +16,8 @@ export function initialiseAppInsights(): void {
     setup().setDistributedTracingMode(DistributedTracingModes.AI_AND_W3C).start()
   }
 }
+
+initialiseAppInsights()
 
 export function buildAppInsightsClient(
   { applicationName, buildNumber }: ApplicationInfo,
