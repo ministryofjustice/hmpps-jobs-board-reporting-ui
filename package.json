@@ -78,6 +78,8 @@
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.1047.0",
+    "@microsoft/applicationinsights-clickanalytics-js": "3.4.1",
+    "@microsoft/applicationinsights-web": "3.4.1",
     "@ministryofjustice/frontend": "9.0.0",
     "@ministryofjustice/hmpps-connect-dps-components": "5.4.0",
     "agentkeepalive": "^4.5.0",

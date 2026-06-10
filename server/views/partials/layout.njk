@@ -1,6 +1,7 @@
 {% extends "govuk/template.njk" %}
 
 {% block head %}
+  {% include "partials/appInsightsWebTracking.njk" %}
   <link href="{{ '/assets/css/app.css' | assetMap }}" rel="stylesheet"/>
 
   {% for css in feComponents.cssIncludes %}

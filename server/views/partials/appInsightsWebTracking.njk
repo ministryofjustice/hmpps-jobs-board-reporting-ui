@@ -1,0 +1,32 @@
+{% if appInsightsConnectionString %}
+  <script type="text/javascript" src="/assets/applicationinsights-web.min.js" nonce="{{ cspNonce }}"></script>
+  <script type="text/javascript" src="/assets/applicationinsights-clickanalytics-js.min.js" nonce="{{ cspNonce }}"></script>
+  <script type="text/javascript" nonce="{{ cspNonce }}">
+    const clickPluginInstance = new Microsoft.ApplicationInsights.ClickAnalyticsPlugin();
+    const clickPluginConfig = {
+      autoCapture: true,
+      dataTags: {
+        useDefaultContentNameOrId: true
+      }
+    };
+    const snippet = {
+      config: {
+        connectionString: {{ appInsightsConnectionString | dump | safe }},
+        extensions: [clickPluginInstance],
+        extensionConfig: {
+          [clickPluginInstance.identifier]: clickPluginConfig
+        },
+        autoTrackPageVisitTime: true
+      }
+    };
+    const init = new Microsoft.ApplicationInsights.ApplicationInsights(snippet);
+    const appInsights = init.loadAppInsights();
+
+    appInsights.addTelemetryInitializer(function (envelope) {
+      envelope.tags["ai.cloud.role"] = "hmpps-jobs-board-reporting-ui";
+      envelope.tags["ai.application.ver"] = {{ buildNumber | dump | safe }};
+    });
+
+    appInsights.trackPageView();
+  </script>
+{% endif %}

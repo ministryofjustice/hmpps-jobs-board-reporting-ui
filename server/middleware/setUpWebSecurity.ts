@@ -3,6 +3,8 @@ import express, { Router, Request, Response, NextFunction } from 'express'
 import helmet from 'helmet'
 import config from '../config'
 
+const azureDomains = ['https://northeurope-0.in.applicationinsights.azure.com', 'https://js.monitor.azure.com']
+
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
 
@@ -38,6 +40,7 @@ export default function setUpWebSecurity(): Router {
             config.apis.frontendComponents.url,
             (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`,
           ],
+          connectSrc: ["'self'", ...azureDomains],
           fontSrc: ["'self'", config.apis.frontendComponents.url],
           formAction: [`'self' ${config.apis.hmppsAuth.externalUrl}`],
           objectSrc: ["'none'"], // Disallow <object> or <embed> tags
