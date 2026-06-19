@@ -193,6 +193,12 @@
     },
     "glob": {
       "minimatch": "^10.2.3"
+    },
+    "superagent": {
+      "form-data": "4.0.6"
+    },
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "4.2.0"
     }
   }
 }

@@ -6,7 +6,6 @@ export default configureAllowedScripts({
      "node_modules/dtrace-provider@0.8.8": "ALLOW",
      "node_modules/esbuild@0.25.8": "ALLOW",
      "node_modules/fsevents@2.3.3": "ALLOW",
-     "node_modules/postinstall-postinstall@2.1.0": "ALLOW",
-     "node_modules/protobufjs@8.4.2": "ALLOW"
+     "node_modules/postinstall-postinstall@2.1.0": "ALLOW"
    },
 })
