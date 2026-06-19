@@ -199,6 +199,9 @@
     },
     "@istanbuljs/load-nyc-config": {
       "js-yaml": "4.2.0"
+    },
+    "node-gyp": {
+      "undici": "6.27.0"
     }
   }
 }
