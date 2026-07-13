@@ -2,9 +2,67 @@
 [![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/hmpps-jobs-board-reporting-ui/badge)](https://github-community.service.justice.gov.uk/repository-standards/hmpps-jobs-board-reporting-ui)
 [![Pipeline [test -> build -> deploy]](https://github.com/ministryofjustice/hmpps-jobs-board-reporting-ui/actions/workflows/pipeline.yml/badge.svg?branch=main)](https://github.com/ministryofjustice/hmpps-jobs-board-reporting-ui/actions/workflows/pipeline.yml)
 
-Template github repo used for new Typescript based projects.
+A UI service to allow PELs and others to view/run reports and stats for the jobs board
+
+### Dependencies
+The app requires:
+* hmpps-auth - for authentication
+* redis - session store and token caching
+
+
+## Running the app locally
+The easiest way to run the app is to use docker compose to create the service and all dependencies.
+
+`docker compose pull`
+
+`docker compose up`
+
+
+### Running the app for development
+
+To start the main services excluding the example typescript template app:
+
+`docker compose up --scale=app=0`
+
+Create an environment file by copying `.env.example` -> `.env` and updating the secrets from kubernetes. Environment variables set in here will be available when running `start:dev`
+
+Install dependencies using `npm run setup`, ensuring you are using `node v24`
+
+Note: Using `nvm` (or [fnm](https://github.com/Schniz/fnm)), run `nvm install --latest-npm` within the repository folder to use the correct version of node, and the latest version of npm. This matches the `engines` config in `package.json` and the GitHub Actions build config.
+
+And then, to build the assets and start the app with esbuild:
+
+`npm run start:dev`
+
+### Run linter
+
+`npm run lint` runs `eslint`
+
+### Run unit tests
+
+`npm run test`
+
+### Running integration tests
+
+For local running, start a test db and wiremock instance by:
+
+`docker compose -f docker-compose-test.yml up`
+
+Then run the server in test mode by:
+
+`npm run start-feature` (or `npm run start-feature:dev` to run with auto-restart on changes)
+
+And then either, run tests in headless mode with:
+
+`npm run int-test`
+
+Or run tests with the cypress UI:
+
+`npm run int-test-ui`
 
 # Instructions
+
+To allow easy identification of an application, the product Id of the overall product should be set in `values.yaml`. The Service Catalogue contains a list of these IDs and is currently in development here https://developer-portal.hmpps.service.justice.gov.uk/products
 
 If this is a HMPPS project then the project will be created as part of bootstrapping - 
 see https://github.com/ministryofjustice/hmpps-project-bootstrap. You are able to specify a template application using the `github_template_repo` attribute to clone without the need to manually do this yourself within GitHub.
@@ -50,60 +108,6 @@ It then performs a search and replace and directory renames so the project is re
 To ensure notifications are routed to the correct slack channels, update the `alerts-slack-channel` and `releases-slack-channel` parameters in `.circle/config.yml` to an appropriate channel.
 
 ## Filling in the `productId`
-
-To allow easy identification of an application, the product Id of the overall product should be set in `values.yaml`. The Service Catalogue contains a list of these IDs and is currently in development here https://developer-portal.hmpps.service.justice.gov.uk/products
-
-## Running the app
-The easiest way to run the app is to use docker compose to create the service and all dependencies. 
-
-`docker compose pull`
-
-`docker compose up`
-
-### Dependencies
-The app requires: 
-* hmpps-auth - for authentication
-* redis - session store and token caching
-
-### Running the app for development
-
-To start the main services excluding the example typescript template app: 
-
-`docker compose up --scale=app=0`
-
-Install dependencies using `npm run setup`, ensuring you are using `node v24`
-
-Note: Using `nvm` (or [fnm](https://github.com/Schniz/fnm)), run `nvm install --latest-npm` within the repository folder to use the correct version of node, and the latest version of npm. This matches the `engines` config in `package.json` and the GitHub Actions build config.
-
-And then, to build the assets and start the app with esbuild:
-
-`npm run start:dev`
-
-### Run linter
-
-`npm run lint`
-
-### Run tests
-
-`npm run test`
-
-### Running integration tests
-
-For local running, start a test db and wiremock instance by:
-
-`docker compose -f docker-compose-test.yml up`
-
-Then run the server in test mode by:
-
-`npm run start-feature` (or `npm run start-feature:dev` to run with auto-restart on changes)
-
-And then either, run tests in headless mode with:
-
-`npm run int-test`
- 
-Or run tests with the cypress UI:
-
-`npm run int-test-ui`
 
 ## Change log
 
