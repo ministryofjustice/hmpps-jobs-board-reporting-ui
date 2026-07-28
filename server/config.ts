@@ -142,7 +142,6 @@ export default {
   sqs: {
     audit: auditConfig(),
   },
-  appInsightsConnectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', ''),
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
   dpsHomeUrl: get('DPS_URL', 'http://localhost:3001/', requiredInProduction),
