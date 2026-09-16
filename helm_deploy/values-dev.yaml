@@ -24,7 +24,6 @@ generic-service:
     COMPONENT_API_URL: "https://frontend-components-dev.hmpps.service.justice.gov.uk"
     WORK_AFTER_RELEASE_URL: "https://get-ready-for-work-dev.hmpps.service.justice.gov.uk"
     SYSTEM_PHASE: DEV
-    AUDIT_ENABLED: "false"
 
   scheduledDowntime:
     enabled: true
