@@ -42,7 +42,7 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware())
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
-  // app.use(telemetryMiddleware.addUserMetadataToTelemetry())
+  app.use(telemetryMiddleware.addUserMetadataToTelemetry())
   app.use(setUpLocals())
   app.use(expressContext())
 
