@@ -34,7 +34,7 @@ generic-service:
       AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
       AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
   
-  serviceAccountName: "hmpps-jobs-board-reporting-ui"
+  serviceAccountName: "hmpps-jobs-board-reporting"
 
 generic-prometheus-alerts:
   businessHoursOnly: true
