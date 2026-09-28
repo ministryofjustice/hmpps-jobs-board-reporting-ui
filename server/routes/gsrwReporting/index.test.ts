@@ -1,16 +1,16 @@
 import { Router } from 'express'
-import Controller from './mjmaReportingController'
-import getMjmaDashboardResolver from '../../middleware/resolvers/getMjmaDashboardResolver'
+import Controller from './gsrwReportingController'
+import getGsrwDashboardResolver from '../../middleware/resolvers/getGsrwDashboardResolver'
 import auditPageView from '../../middleware/auditPageView'
 import { Page } from '../../services/auditService'
 import { Services } from '../../services'
 import routes from './index'
 
-jest.mock('./mjmaReportingController')
-jest.mock('../../middleware/resolvers/getMjmaDashboardResolver')
+jest.mock('./gsrwReportingController')
+jest.mock('../../middleware/resolvers/getGsrwDashboardResolver')
 jest.mock('../../middleware/auditPageView')
 
-describe('MJMA Reporting routes', () => {
+describe('GSRW Reporting routes', () => {
   let router: Router
   let services: Services
 
@@ -19,25 +19,25 @@ describe('MJMA Reporting routes', () => {
     services = {
       auditService: {},
       prisonerSearchService: {},
-      userService: {},
+      workProfileService: {},
     } as unknown as Services
     ;(Controller as jest.Mock).mockImplementation(() => ({
       get: jest.fn(),
       post: jest.fn(),
     }))
-    ;(getMjmaDashboardResolver as jest.Mock).mockImplementation(() => jest.fn())
+    ;(getGsrwDashboardResolver as jest.Mock).mockImplementation(() => jest.fn())
     ;(auditPageView as jest.Mock).mockImplementation(() => jest.fn())
   })
 
   it('should register GET route', () => {
     routes(router, services)
 
-    expect(auditPageView).toHaveBeenCalledWith(services.auditService, Page.MJMA_REPORTING_PAGE)
+    expect(auditPageView).toHaveBeenCalledWith(services.auditService, Page.GSRW_REPORTING_PAGE)
     expect(router.get).toHaveBeenCalledWith(
-      '/',
+      '/gsrw',
       [
         expect.any(Function), // auditPageView
-        expect.any(Function), // getMjmaDashboardResolver
+        expect.any(Function), // getGsrwDashboardResolver
       ],
       expect.any(Function), // controller.get
     )
@@ -47,7 +47,7 @@ describe('MJMA Reporting routes', () => {
     routes(router, services)
 
     expect(router.post).toHaveBeenCalledWith(
-      '/',
+      '/gsrw',
       expect.any(Function), // controller.post
     )
   })

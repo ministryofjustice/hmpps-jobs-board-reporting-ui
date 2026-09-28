@@ -12,46 +12,64 @@ describe('Audit service', () => {
     auditService = new AuditService(hmppsAuditClient)
   })
 
-  describe('logAuditEvent', () => {
-    it('sends audit message using audit client', async () => {
-      await auditService.logAuditEvent({
-        what: 'AUDIT_EVENT',
+  describe('logPageViewAttempt', () => {
+    it('sends page view attempt audit message using audit client', async () => {
+      await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
         who: 'user1',
-        subjectId: 'subject123',
-        subjectType: 'exampleType',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
       })
 
-      expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith({
-        what: 'AUDIT_EVENT',
-        who: 'user1',
-        subjectId: 'subject123',
-        subjectType: 'exampleType',
-        correlationId: 'request123',
-        details: { extraDetails: 'example' },
-      })
+      expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
+        {
+          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_ATTEMPT',
+          who: 'user1',
+          subjectType: 'NOT_APPLICABLE',
+          correlationId: 'request123',
+          details: { extraDetails: 'example' },
+        },
+        false,
+      )
     })
-  })
 
-  describe('logPageView', () => {
-    it('sends page view event audit message using audit client', async () => {
-      await auditService.logPageView(Page.EXAMPLE_PAGE, {
+    it('sends page view success audit message using audit client', async () => {
+      const pageViewAttempt = await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
         who: 'user1',
-        subjectId: 'subject123',
-        subjectType: 'exampleType',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
       })
+      await pageViewAttempt.success()
 
-      expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith({
-        what: 'PAGE_VIEW_EXAMPLE_PAGE',
+      expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
+        {
+          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_SUCCESS',
+          who: 'user1',
+          subjectType: 'NOT_APPLICABLE',
+          correlationId: 'request123',
+          details: { extraDetails: 'example' },
+        },
+        false,
+      )
+    })
+
+    it('sends page view failure audit message using audit client', async () => {
+      const pageViewAttempt = await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
         who: 'user1',
-        subjectId: 'subject123',
-        subjectType: 'exampleType',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
       })
+      await pageViewAttempt.failure()
+
+      expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
+        {
+          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_FAILURE',
+          who: 'user1',
+          subjectType: 'NOT_APPLICABLE',
+          correlationId: 'request123',
+          details: { extraDetails: 'example' },
+        },
+        false,
+      )
     })
   })
 })
