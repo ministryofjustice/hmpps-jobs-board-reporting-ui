@@ -3,7 +3,7 @@ generic-service:
   productId: "DPS015" # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
   # the IRSA service account name for accessing AWS resources
-  # serviceAccountName: "hmpps-jobs-board-reporting-ui"
+  serviceAccountName: "hmpps-jobs-board-reporting"
 
   replicaCount: 4
 
@@ -33,7 +33,7 @@ generic-service:
     TOKEN_VERIFICATION_ENABLED: "true"
     AUDIT_SQS_REGION: "eu-west-2"
     AUDIT_SERVICE_NAME: "hmpps-jobs-board-reporting-ui"
-    AUDIT_ENABLED: "false"
+    AUDIT_ENABLED: "true"
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -52,6 +52,9 @@ generic-service:
       REDIS_AUTH_TOKEN: "auth_token"
     hmpps-jobs-board-reporting-ui-application-insights:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
+    sqs-hmpps-audit-secret:
+      AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
+      AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
 
   allowlist:
     groups:

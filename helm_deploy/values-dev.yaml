@@ -24,17 +24,9 @@ generic-service:
     COMPONENT_API_URL: "https://frontend-components-dev.hmpps.service.justice.gov.uk"
     WORK_AFTER_RELEASE_URL: "https://get-ready-for-work-dev.hmpps.service.justice.gov.uk"
     SYSTEM_PHASE: DEV
-    AUDIT_ENABLED: "true"
 
   scheduledDowntime:
     enabled: true
-
-  namespace_secrets:
-    sqs-hmpps-audit-secret:
-      AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
-      AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
-  
-  serviceAccountName: "hmpps-jobs-board-reporting"
 
 generic-prometheus-alerts:
   businessHoursOnly: true
