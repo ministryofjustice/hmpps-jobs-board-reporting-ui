@@ -82,7 +82,7 @@
     "@ministryofjustice/hmpps-connect-dps-components": "5.4.0",
     "@ministryofjustice/hmpps-azure-telemetry": "^1.1.0",
     "agentkeepalive": "^4.5.0",
-    "body-parser": "^1.20.3",
+    "body-parser": "^2.3.0",
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
     "class-transformer": "^0.5.1",
