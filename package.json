@@ -88,7 +88,7 @@
     "class-transformer": "^0.5.1",
     "compression": "^1.7.5",
     "connect-flash": "^0.1.1",
-    "connect-redis": "^7.1.1",
+    "connect-redis": "^10.0.0",
     "crypto-js": "^4.2.0",
     "csurf": "^1.11.0",
     "date-fns": "^4.1.0",
