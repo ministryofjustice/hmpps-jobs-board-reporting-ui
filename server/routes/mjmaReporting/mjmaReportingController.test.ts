@@ -92,6 +92,7 @@ describe('MjmaReportingController', () => {
   describe('#post', () => {
     beforeEach(() => {
       res.render.mockReset()
+      res.status.mockClear()
       res.redirect.mockReset()
       next.mockReset()
     })
@@ -112,6 +113,7 @@ describe('MjmaReportingController', () => {
 
       await controller.post(req, res, next)
 
+      expect(res.status).toHaveBeenCalledWith(400)
       expect(res.render).toHaveBeenCalledWith('pages/mjmaReporting/index', {
         some: 'session data',
         errors: { dateFrom: 'Invalid date' },
