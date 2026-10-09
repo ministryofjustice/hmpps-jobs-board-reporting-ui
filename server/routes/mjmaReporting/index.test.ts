@@ -1,14 +1,14 @@
 import { Router } from 'express'
 import Controller from './mjmaReportingController'
 import getMjmaDashboardResolver from '../../middleware/resolvers/getMjmaDashboardResolver'
-import auditPageView from '../../middleware/auditPageView'
-import { Page } from '../../services/auditService'
+import auditEvent from '../../middleware/auditEvent'
+import { EventName } from '../../services/auditService'
 import { Services } from '../../services'
 import routes from './index'
 
 jest.mock('./mjmaReportingController')
 jest.mock('../../middleware/resolvers/getMjmaDashboardResolver')
-jest.mock('../../middleware/auditPageView')
+jest.mock('../../middleware/auditEvent')
 
 describe('MJMA Reporting routes', () => {
   let router: Router
@@ -26,17 +26,17 @@ describe('MJMA Reporting routes', () => {
       post: jest.fn(),
     }))
     ;(getMjmaDashboardResolver as jest.Mock).mockImplementation(() => jest.fn())
-    ;(auditPageView as jest.Mock).mockImplementation(() => jest.fn())
+    ;(auditEvent as jest.Mock).mockImplementation(() => jest.fn())
   })
 
   it('should register GET route', () => {
     routes(router, services)
 
-    expect(auditPageView).toHaveBeenCalledWith(services.auditService, Page.MJMA_REPORTING_PAGE)
+    expect(auditEvent).toHaveBeenCalledWith(services.auditService, EventName.VIEW_MJMA_REPORTING_PAGE)
     expect(router.get).toHaveBeenCalledWith(
       '/',
       [
-        expect.any(Function), // auditPageView
+        expect.any(Function), // auditEvent
         expect.any(Function), // getMjmaDashboardResolver
       ],
       expect.any(Function), // controller.get
@@ -48,6 +48,7 @@ describe('MJMA Reporting routes', () => {
 
     expect(router.post).toHaveBeenCalledWith(
       '/',
+      [expect.any(Function)], // auditEvent
       expect.any(Function), // controller.post
     )
   })

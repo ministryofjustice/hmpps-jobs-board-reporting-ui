@@ -1,4 +1,4 @@
-import AuditService, { Page } from './auditService'
+import AuditService, { EventName } from './auditService'
 import HmppsAuditClient from '../data/hmppsAuditClient'
 
 jest.mock('../data/hmppsAuditClient')
@@ -12,9 +12,9 @@ describe('Audit service', () => {
     auditService = new AuditService(hmppsAuditClient)
   })
 
-  describe('logPageViewAttempt', () => {
-    it('sends page view attempt audit message using audit client', async () => {
-      await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
+  describe('logAttempt', () => {
+    it('sends attempt audit message using audit client', async () => {
+      await auditService.logAttempt(EventName.VIEW_GSRW_REPORTING_PAGE, {
         who: 'user1',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
@@ -22,9 +22,10 @@ describe('Audit service', () => {
 
       expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
         {
-          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_ATTEMPT',
+          what: 'VIEW_GSRW_REPORTING_PAGE_ATTEMPT',
           who: 'user1',
           subjectType: 'NOT_APPLICABLE',
+          subjectId: 'NONE',
           correlationId: 'request123',
           details: { extraDetails: 'example' },
         },
@@ -32,19 +33,20 @@ describe('Audit service', () => {
       )
     })
 
-    it('sends page view success audit message using audit client', async () => {
-      const pageViewAttempt = await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
+    it('sends success audit message using audit client', async () => {
+      const attempt = await auditService.logAttempt(EventName.VIEW_GSRW_REPORTING_PAGE, {
         who: 'user1',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
       })
-      await pageViewAttempt.success()
+      await attempt.success()
 
       expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
         {
-          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_SUCCESS',
+          what: 'VIEW_GSRW_REPORTING_PAGE_SUCCESS',
           who: 'user1',
           subjectType: 'NOT_APPLICABLE',
+          subjectId: 'NONE',
           correlationId: 'request123',
           details: { extraDetails: 'example' },
         },
@@ -52,19 +54,20 @@ describe('Audit service', () => {
       )
     })
 
-    it('sends page view failure audit message using audit client', async () => {
-      const pageViewAttempt = await auditService.logPageViewAttempt(Page.GSRW_REPORTING_PAGE, {
+    it('sends failure audit message using audit client', async () => {
+      const attempt = await auditService.logAttempt(EventName.VIEW_GSRW_REPORTING_PAGE, {
         who: 'user1',
         correlationId: 'request123',
         details: { extraDetails: 'example' },
       })
-      await pageViewAttempt.failure()
+      await attempt.failure()
 
       expect(hmppsAuditClient.sendMessage).toHaveBeenCalledWith(
         {
-          what: 'PAGE_VIEW_GSRW_REPORTING_PAGE_FAILURE',
+          what: 'VIEW_GSRW_REPORTING_PAGE_FAILURE',
           who: 'user1',
           subjectType: 'NOT_APPLICABLE',
+          subjectId: 'NONE',
           correlationId: 'request123',
           details: { extraDetails: 'example' },
         },
