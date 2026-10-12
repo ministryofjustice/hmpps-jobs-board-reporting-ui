@@ -86,7 +86,7 @@
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
     "class-transformer": "^0.5.1",
-    "compression": "^1.7.5",
+    "compression": "^1.8.2",
     "connect-flash": "^0.1.1",
     "connect-redis": "^7.1.1",
     "crypto-js": "^4.2.0",
@@ -138,7 +138,7 @@
     "@typescript-eslint/parser": "^8.10.0",
     "audit-ci": "^7.1.0",
     "aws-sdk-client-mock": "^4.1.0",
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.11",
     "chokidar": "^3.6.0",
     "concurrently": "^8.2.2",
     "cypress": "15.16.0",
@@ -175,7 +175,7 @@
     "typescript": "^5.7.3"
   },
   "overrides": {
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.11",
     "protobufjs": "^8.2.0",
     "qs": "^6.15.2",
     "tmp": "^0.2.6",
@@ -196,6 +196,10 @@
     "superagent": {
       "form-data": "4.0.6"
     },
-    "@opentelemetry/core": "^2.8.0"
+    "@opentelemetry/core": "^2.8.0",
+    "express": {
+      "proxy-addr": "^2.0.8"
+    },
+    "moment": "^2.31.0"
   }
 }
