@@ -12,6 +12,7 @@ const expressMocks = () => ({
   res: {
     render: jest.fn(),
     redirect: jest.fn(),
+    status: jest.fn().mockReturnThis(),
     locals: {},
   } as any,
   next: jest.fn(),

@@ -1,8 +1,10 @@
 import HmppsAuditClient, { AuditEvent } from '../data/hmppsAuditClient'
 
-export enum Page {
-  GSRW_REPORTING_PAGE = 'GSRW_REPORTING_PAGE',
-  MJMA_REPORTING_PAGE = 'MJMA_REPORTING_PAGE',
+export enum EventName {
+  VIEW_GSRW_REPORTING_PAGE = 'VIEW_GSRW_REPORTING_PAGE',
+  VIEW_MJMA_REPORTING_PAGE = 'VIEW_MJMA_REPORTING_PAGE',
+  SEARCH_GSRW_DATE_FILTER = 'SEARCH_GSRW_DATE_FILTER',
+  SEARCH_MJMA_DATE_FILTER = 'SEARCH_MJMA_DATE_FILTER',
 }
 
 enum Suffix {
@@ -11,13 +13,13 @@ enum Suffix {
   FAILURE = 'FAILURE',
 }
 
-export interface PageViewEventDetails {
+export interface EventDetails {
   who: string
   correlationId?: string
   details?: object
 }
 
-export interface PageViewOutcome {
+export interface Outcome {
   success(): Promise<void>
   failure(): Promise<void>
 }
@@ -25,21 +27,22 @@ export interface PageViewOutcome {
 export default class AuditService {
   constructor(private readonly hmppsAuditClient: HmppsAuditClient) {}
 
-  private async logPageView(page: Page, suffix: Suffix, eventDetails: PageViewEventDetails) {
+  private async logEvent(eventName: EventName, suffix: Suffix, eventDetails: EventDetails) {
     const event: AuditEvent = {
       ...eventDetails,
-      what: `PAGE_VIEW_${page}_${suffix}`,
+      what: `${eventName}_${suffix}`,
       subjectType: 'NOT_APPLICABLE',
+      subjectId: 'NONE',
     }
     await this.hmppsAuditClient.sendMessage(event, false)
   }
 
-  async logPageViewAttempt(page: Page, eventDetails: PageViewEventDetails): Promise<PageViewOutcome> {
-    await this.logPageView(page, Suffix.ATTEMPT, eventDetails)
+  async logAttempt(eventName: EventName, eventDetails: EventDetails): Promise<Outcome> {
+    await this.logEvent(eventName, Suffix.ATTEMPT, eventDetails)
 
     return {
-      success: () => this.logPageView(page, Suffix.SUCCESS, eventDetails),
-      failure: () => this.logPageView(page, Suffix.FAILURE, eventDetails),
+      success: () => this.logEvent(eventName, Suffix.SUCCESS, eventDetails),
+      failure: () => this.logEvent(eventName, Suffix.FAILURE, eventDetails),
     }
   }
 }

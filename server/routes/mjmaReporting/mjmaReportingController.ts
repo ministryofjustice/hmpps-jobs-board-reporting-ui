@@ -79,7 +79,7 @@ export default class MjmaReportingController {
       const errors = validateFormSchema(req, validationSchema())
 
       if (errors) {
-        res.render('pages/mjmaReporting/index', {
+        res.status(400).render('pages/mjmaReporting/index', {
           ...data,
           errors,
           dateFrom,

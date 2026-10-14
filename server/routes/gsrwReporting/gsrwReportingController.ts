@@ -99,7 +99,7 @@ export default class GsrwReportingController {
       const errors = validateFormSchema(req, validationSchema())
 
       if (errors) {
-        res.render('pages/gsrwReporting/index', {
+        res.status(400).render('pages/gsrwReporting/index', {
           ...data,
           errors,
           dateFrom,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import expressMocks from '../../testutils/expressMocks'
 import GsrwReportingController from './gsrwReportingController'
 import sortByArray from '../../utils/sortByArray'
@@ -79,6 +78,7 @@ describe('GsrwReportingController', () => {
   describe('#post', () => {
     beforeEach(() => {
       res.render.mockReset()
+      res.status.mockClear()
       res.redirect.mockReset()
       next.mockReset()
     })
@@ -99,6 +99,7 @@ describe('GsrwReportingController', () => {
 
       await controller.post(req, res, next)
 
+      expect(res.status).toHaveBeenCalledWith(400)
       expect(res.render).toHaveBeenCalledWith('pages/gsrwReporting/index', {
         some: 'session data',
         errors: { dateFrom: 'Invalid date' },
