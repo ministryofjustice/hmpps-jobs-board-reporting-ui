@@ -175,7 +175,7 @@
     "typescript": "^5.7.3"
   },
   "overrides": {
-    "argparse": "^2.0.1",
+    "argparse": "^3.0.4",
     "brace-expansion": "5.0.12",
     "protobufjs": "^8.2.0",
     "qs": "^6.15.2",
